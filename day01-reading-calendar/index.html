@@ -903,7 +903,8 @@
         var thumb = v.imageLinks ? (v.imageLinks.thumbnail || v.imageLinks.smallThumbnail || '') : '';
         thumb = thumb ? thumb.replace('http://', 'https://') : '';
         return '<button class="result-item" data-idx="' + idx + '">' +
-          '<span class="thumb">' + (thumb ? '<img src="' + escapeHtml(thumb) + '" alt="">' : '📖') + '</span>' +
+          '<span class="thumb">' + (thumb ? '<img src="' + escapeHtml(thumb) + '" alt=""' +
+            ' onerror="window.__rcCoverFallback(this)" onload="window.__rcCoverCheck(this)">' : '📖') + '</span>' +
           '<span class="info"><span class="r-title">' + escapeHtml(v.title || '제목 없음') + '</span>' +
           '<span class="r-sub">' + escapeHtml((v.authors || []).join(', ') || '작가 미상') + '</span></span>' +
           '</button>';
