@@ -735,9 +735,26 @@
     return fillTemplate(category.templates[idx], book);
   }
 
+  function publisherLineHtml(book) {
+    var parts = [];
+    if (book.publisher) parts.push(escapeHtml(book.publisher));
+    if (book.pageCount) parts.push(book.pageCount + '쪽');
+    return parts.length ? '<p class="sub">' + parts.join(' · ') + '</p>' : '';
+  }
+  window.__rcCoverFallback = function (img) {
+    img.outerHTML = '<span class="cover-fallback">📖</span>';
+  };
+  window.__rcCoverCheck = function (img) {
+    // Google Books serves a 128x170 "image not available" placeholder
+    // with a 200 OK, so onerror alone won't catch a missing cover.
+    if (img.naturalWidth === 128 && img.naturalHeight === 170) {
+      window.__rcCoverFallback(img);
+    }
+  };
   function bookCoverHtml(book, size) {
     if (book && book.thumbnail) {
-      return '<img src="' + escapeHtml(book.thumbnail) + '" alt="">';
+      return '<img src="' + escapeHtml(book.thumbnail) + '" alt=""' +
+        ' onerror="window.__rcCoverFallback(this)" onload="window.__rcCoverCheck(this)">';
     }
     return '<span class="cover-fallback">📖</span>';
   }
@@ -969,7 +986,7 @@
       '<div class="meta">' +
       '<h4>' + escapeHtml(book.title) + '</h4>' +
       (book.authors ? '<p class="sub">' + escapeHtml(book.authors) + '</p>' : '') +
-      (book.publisher ? '<p class="sub">' + escapeHtml(book.publisher) + '</p>' : '') +
+      publisherLineHtml(book) +
       '<span class="category-badge">' + escapeHtml(category.label) + '</span>' +
       '<p class="tagline">' + escapeHtml(book.tagline) + '</p>' +
       '</div></div>' +
@@ -1005,7 +1022,7 @@
       '<div class="meta">' +
       '<h4>' + escapeHtml(book.title) + '</h4>' +
       (book.authors ? '<p class="sub">' + escapeHtml(book.authors) + '</p>' : '') +
-      (book.publisher ? '<p class="sub">' + escapeHtml(book.publisher) + (book.pageCount ? ' · ' + book.pageCount + '쪽' : '') + '</p>' : '') +
+      publisherLineHtml(book) +
       '<span class="category-badge">' + escapeHtml(category.label) + '</span>' +
       '<p class="tagline">' + escapeHtml(book.tagline) + '</p>' +
       '</div></div>';
