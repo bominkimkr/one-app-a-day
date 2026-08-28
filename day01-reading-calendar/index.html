@@ -567,6 +567,7 @@
 
   var STORAGE_KEYS = { books: 'rc_books', entries: 'rc_entries', badges: 'rc_badges' };
   var MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  var GOOGLE_BOOKS_API_KEY = 'AIzaSyBshQZw_rI3UFS7cY6hlvUvS614CgLkBOk';
 
   var CATEGORIES = [
     { id: 'essay', label: '마음을 안아주는 에세이', keywords: ['essay','에세이','수필'],
@@ -869,9 +870,10 @@
     var resultsEl = document.getElementById('searchResults');
     if (!query) { resultsEl.innerHTML = '<p class="status-text">책 제목을 입력해주세요.</p>'; return; }
     resultsEl.innerHTML = '<p class="status-text">검색 중...</p>';
-    var url = 'https://www.googleapis.com/books/v1/volumes?maxResults=10&q=' + encodeURIComponent(query);
+    var url = 'https://www.googleapis.com/books/v1/volumes?maxResults=10&country=KR&q=' +
+      encodeURIComponent(query) + '&key=' + GOOGLE_BOOKS_API_KEY;
     fetch(url).then(function (res) {
-      if (!res.ok) throw new Error('search failed');
+      if (!res.ok) { var err = new Error('search failed'); err.status = res.status; throw err; }
       return res.json();
     }).then(function (data) {
       var items = data.items || [];
@@ -905,8 +907,11 @@
           });
         });
       });
-    }).catch(function () {
-      resultsEl.innerHTML = '<p class="status-text">검색 중 문제가 생겼어요. 인터넷 연결을 확인하거나 직접 입력해주세요.</p>';
+    }).catch(function (err) {
+      var reason = err && err.status === 429
+        ? '오늘의 검색 횟수를 다 썼어요.'
+        : '검색 중 문제가 생겼어요. 인터넷 연결을 확인해주세요.';
+      resultsEl.innerHTML = '<p class="status-text">' + reason + ' 아래에서 직접 입력해주세요.</p>';
     });
   }
 
