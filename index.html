@@ -200,7 +200,7 @@
         : (typeof app.description === 'string' ? app.description.split('\n') : []);
 
       const thumb = app.screenshot
-        ? `<img src="${escapeHtml(app.screenshot)}" alt="${name} 스크린샷" loading="lazy"
+        ? `<img src="${escapeHtml(app.screenshot)}" alt="${name} 스크린샷"
              onerror="this.parentElement.innerHTML='${escapeHtml(name)}'">`
         : name;
 
