@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보민의 1일 1앱</title>
+<style>
+  :root {
+    --bg: #f5f5f4;
+    --card-bg: #ffffff;
+    --text: #1c1c1e;
+    --text-muted: #6b7280;
+    --accent: #6d5bd0;
+    --border: #e5e5e4;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181c;
+      --card-bg: #212227;
+      --text: #f2f2f3;
+      --text-muted: #9a9aa2;
+      --accent: #a393f5;
+      --border: #2f3036;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.25);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+                 "Noto Sans KR", "Malgun Gothic", sans-serif;
+    line-height: 1.5;
+  }
+  header {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 20px 24px;
+  }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: clamp(28px, 5vw, 40px);
+    letter-spacing: -0.02em;
+  }
+  header p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px 64px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  .thumb {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    background: linear-gradient(135deg, #6d5bd0, #a393f5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    overflow: hidden;
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .card-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  .day-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+  }
+  .card h2 {
+    margin: 0;
+    font-size: 19px;
+  }
+  .card .desc {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    flex: 1;
+  }
+  .card .desc li {
+    margin-bottom: 2px;
+  }
+  .card .desc {
+    padding-left: 18px;
+  }
+  .open-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .open-link:hover {
+    text-decoration: underline;
+  }
+  .empty, .error {
+    color: var(--text-muted);
+    padding: 40px 0;
+    text-align: center;
+  }
+  footer {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>보민의 1일 1앱</h1>
+    <p>하루에 하나씩, 작은 앱을 만들어 쌓아가는 기록입니다.</p>
+  </header>
+  <main>
+    <div id="gallery" class="grid" aria-live="polite"></div>
+  </main>
+  <footer>
+    <span id="app-count"></span>
+  </footer>
+
+  <script>
+    async function loadApps() {
+      const gallery = document.getElementById('gallery');
+      const countEl = document.getElementById('app-count');
+      try {
+        const res = await fetch('apps.json', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('apps.json을 불러오지 못했습니다 (' + res.status + ')');
+        const apps = await res.json();
+
+        if (!Array.isArray(apps) || apps.length === 0) {
+          gallery.innerHTML = '<p class="empty">아직 등록된 앱이 없어요. 첫 앱을 추가해보세요!</p>';
+          return;
+        }
+
+        apps.sort((a, b) => (b.day ?? 0) - (a.day ?? 0));
+
+        gallery.innerHTML = apps.map(renderCard).join('');
+        countEl.textContent = `현재 ${apps.length}개의 앱이 등록되어 있어요.`;
+      } catch (err) {
+        gallery.innerHTML =
+          '<p class="error">앱 목록을 불러오는 중 문제가 생겼어요.<br>' +
+          '이 페이지를 로컬 파일로 직접 열면 브라우저 보안 정책 때문에 apps.json을 읽지 못할 수 있어요.<br>' +
+          '로컬 서버로 실행하거나 GitHub Pages 배포본에서 확인해주세요.</p>';
+        console.error(err);
+      }
+    }
+
+    function renderCard(app) {
+      const dayLabel = app.day != null ? `Day ${String(app.day).padStart(2, '0')}` : '';
+      const name = escapeHtml(app.name || app.folder || '이름 없는 앱');
+      const link = app.folder ? `${app.folder}/index.html` : '#';
+      const descItems = Array.isArray(app.description)
+        ? app.description
+        : (typeof app.description === 'string' ? app.description.split('\n') : []);
+
+      const thumb = app.screenshot
+        ? `<img src="${escapeHtml(app.screenshot)}" alt="${name} 스크린샷" loading="lazy"
+             onerror="this.parentElement.innerHTML='${escapeHtml(name)}'">`
+        : name;
+
+      return `
+        <article class="card">
+          <div class="thumb">${thumb}</div>
+          <div class="card-body">
+            ${dayLabel ? `<span class="day-badge">${dayLabel}</span>` : ''}
+            <h2>${name}</h2>
+            <ul class="desc">
+              ${descItems.map(line => `<li>${escapeHtml(line)}</li>`).join('')}
+            </ul>
+            <a class="open-link" href="${link}">앱 열어보기 →</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    loadApps();
+  </script>
+</body>
+</html>
