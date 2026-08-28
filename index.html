@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>보민의 1일 1앱</title>
+<title>원데이 원앱 챌린지</title>
 <style>
   :root {
     --bg: #f5f5f4;
@@ -11,7 +11,10 @@
     --text: #1c1c1e;
     --text-muted: #6b7280;
     --accent: #6d5bd0;
+    --accent-soft: #ece8fb;
     --border: #e5e5e4;
+    --track: #e9e7f3;
+    --danger: #c0392b;
     --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.05);
   }
   @media (prefers-color-scheme: dark) {
@@ -21,7 +24,10 @@
       --text: #f2f2f3;
       --text-muted: #9a9aa2;
       --accent: #a393f5;
+      --accent-soft: #2c2840;
       --border: #2f3036;
+      --track: #2c2b33;
+      --danger: #e57373;
       --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.25);
     }
   }
@@ -34,32 +40,151 @@
                  "Noto Sans KR", "Malgun Gothic", sans-serif;
     line-height: 1.5;
   }
+  a { color: inherit; }
   header {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 48px 20px 24px;
+    padding: 48px 20px 20px;
   }
   header h1 {
     margin: 0 0 8px;
     font-size: clamp(28px, 5vw, 40px);
     letter-spacing: -0.02em;
   }
-  header p {
+  header p.subtitle {
     margin: 0;
     color: var(--text-muted);
     font-size: 15px;
   }
+  .toolbar {
+    max-width: 1080px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { opacity: 0.92; }
+  .btn-outline { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
   main {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 20px 64px;
+    padding: 24px 20px 64px;
   }
-  .grid {
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .p-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
   }
+  .p-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+  .p-card-click {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+  }
+  .p-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6d5bd0, #a393f5);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .p-name { margin: 0; font-size: 18px; }
+  .p-insta { margin: 2px 0 0; font-size: 13px; color: var(--accent); text-decoration: none; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .progress-track { background: var(--track); border-radius: 999px; height: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #6d5bd0, #a393f5); border-radius: 999px; }
+  .p-meta-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
+  .p-recent { font-size: 13px; color: var(--text-muted); }
+  .hide-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 8px;
+    opacity: 0.5;
+  }
+  .hide-btn:hover { opacity: 1; color: var(--danger); }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 6px 0;
+    margin-bottom: 18px;
+  }
+  .back-btn:hover { color: var(--text); }
+  .p-detail-head { display: flex; align-items: center; gap: 18px; margin-bottom: 10px; }
+  .p-detail-head .avatar { width: 68px; height: 68px; font-size: 26px; }
+  .p-detail-head h2 { margin: 0 0 4px; font-size: 24px; }
+  .p-detail-progress { max-width: 420px; margin: 18px 0 24px; }
+  .detail-actions { margin-bottom: 24px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
   .card {
+    position: relative;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -67,167 +192,407 @@
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .card:hover {
-    transform: translateY(-3px);
-  }
-  .thumb {
-    aspect-ratio: 16 / 10;
-    width: 100%;
-    background: linear-gradient(135deg, #6d5bd0, #a393f5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    overflow: hidden;
-  }
-  .thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-  }
-  .card-body {
-    padding: 18px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-  }
+  .card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
   .day-badge {
     display: inline-block;
     align-self: flex-start;
-    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    background: var(--accent-soft);
     color: var(--accent);
     font-size: 12px;
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 999px;
-    letter-spacing: 0.02em;
   }
-  .card h2 {
-    margin: 0;
-    font-size: 19px;
+  .card h3 { margin: 0; font-size: 19px; }
+  .card .desc { margin: 0; color: var(--text-muted); font-size: 14px; flex: 1; white-space: pre-line; }
+  .open-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none; }
+  .open-link:hover { text-decoration: underline; }
+  .empty, .error { color: var(--text-muted); padding: 40px 0; text-align: center; }
+  footer { max-width: 1080px; margin: 0 auto; padding: 0 20px 40px; color: var(--text-muted); font-size: 13px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  footer button { background: none; border: none; color: var(--text-muted); font-size: 12.5px; cursor: pointer; text-decoration: underline; padding: 0; }
+
+  /* Overlay / modal */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); align-items: center; justify-content: center; padding: 20px; z-index: 50; overflow-y: auto; }
+  .overlay.open { display: flex; }
+  .overlay-card { background: var(--card-bg); border-radius: 18px; max-width: 420px; width: 100%; padding: 28px 24px; box-shadow: var(--shadow); margin: auto; }
+  .overlay-card h3 { margin: 0 0 14px; font-size: 19px; text-align: center; }
+  .overlay-card p.desc-text { margin: 0 0 20px; color: var(--text-muted); font-size: 14.5px; line-height: 1.6; text-align: center; }
+  .overlay-card .highlight { color: var(--accent); font-weight: 700; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    font-family: inherit;
   }
-  .card .desc {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 14px;
-    flex: 1;
-  }
-  .card .desc li {
-    margin-bottom: 2px;
-  }
-  .card .desc {
-    padding-left: 18px;
-  }
-  .open-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 4px;
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-  }
-  .open-link:hover {
-    text-decoration: underline;
-  }
-  .empty, .error {
-    color: var(--text-muted);
-    padding: 40px 0;
-    text-align: center;
-  }
-  footer {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 20px 40px;
-    color: var(--text-muted);
-    font-size: 13px;
-  }
+  .field textarea { min-height: 80px; resize: vertical; }
+  .overlay-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .overlay-btn-primary { background: var(--accent); color: #fff; border: none; border-radius: 12px; padding: 12px; font-size: 15px; font-weight: 700; cursor: pointer; text-decoration: none; text-align: center; }
+  .overlay-btn-secondary { background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; padding: 6px; }
+  .form-msg { font-size: 13.5px; margin: 4px 0 10px; min-height: 18px; }
+  .form-msg.error { color: var(--danger); }
+  .form-msg.success { color: #2e7d32; }
 </style>
 </head>
 <body>
   <header>
-    <h1>보민의 1일 1앱</h1>
-    <p>하루에 하나씩, 작은 앱을 만들어 쌓아가는 기록입니다.</p>
+    <h1>원데이 원앱 챌린지</h1>
+    <p class="subtitle">30일 동안, 하루에 하나씩 앱을 만드는 챌린지</p>
   </header>
+  <div class="toolbar">
+    <button class="btn btn-primary" id="joinBtn">🙋 챌린지 참가하기</button>
+  </div>
   <main>
-    <div id="gallery" class="grid" aria-live="polite"></div>
+    <section id="participantListScreen" class="screen active">
+      <div id="participantGrid" class="p-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="participantDetailScreen" class="screen">
+      <button class="back-btn" id="backBtn">← 참가자 목록으로</button>
+      <div class="p-detail-head">
+        <div class="avatar" id="detailAvatar"></div>
+        <div>
+          <h2 id="detailName"></h2>
+          <a class="p-insta" id="detailInsta" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+      </div>
+      <div class="p-detail-progress">
+        <div class="progress-label"><span id="detailProgressLabel"></span><span id="detailProgressPct"></span></div>
+        <div class="progress-track"><div class="progress-fill" id="detailProgressFill"></div></div>
+      </div>
+      <div class="detail-actions">
+        <button class="btn btn-outline" id="uploadAppBtn">➕ 내 앱 올리기</button>
+      </div>
+      <div id="detailGrid" class="grid" aria-live="polite"></div>
+    </section>
   </main>
   <footer>
-    <span id="app-count"></span>
+    <span id="footer-note"></span>
+    <button id="adminLinkBtn" type="button">관리자</button>
   </footer>
 
+  <!-- Join overlay -->
+  <div class="overlay" id="joinOverlay">
+    <div class="overlay-card">
+      <h3>챌린지 참가하기</h3>
+      <div class="field"><label>이름</label><input type="text" id="joinName" placeholder="닉네임 또는 이름"></div>
+      <div class="field"><label>인스타그램 아이디 (선택)</label><input type="text" id="joinInsta" placeholder="@ 없이 아이디만"></div>
+      <div class="field"><label>비밀번호 (4자리 숫자)</label><input type="password" id="joinPin" inputmode="numeric" maxlength="4" placeholder="내 기록을 지키는 비밀번호"></div>
+      <div class="field"><label>시작일</label><input type="date" id="joinStartDate"></div>
+      <p class="form-msg" id="joinMsg"></p>
+      <div class="overlay-actions">
+        <button class="overlay-btn-primary" id="joinSubmitBtn">참가하기</button>
+        <button class="overlay-btn-secondary" id="joinCloseBtn">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload app overlay -->
+  <div class="overlay" id="uploadOverlay">
+    <div class="overlay-card">
+      <h3>내 앱 올리기</h3>
+      <div class="field"><label>비밀번호 확인</label><input type="password" id="uploadPin" inputmode="numeric" maxlength="4" placeholder="참가할 때 정한 비밀번호"></div>
+      <div class="field"><label>며칠차예요? (Day N)</label><input type="number" id="uploadDay" min="1" placeholder="예: 3"></div>
+      <div class="field"><label>앱 이름</label><input type="text" id="uploadName" placeholder="예: 습관 트래커"></div>
+      <div class="field"><label>앱 주소 (링크)</label><input type="text" id="uploadUrl" placeholder="https://..."></div>
+      <div class="field"><label>3줄 설명</label><textarea id="uploadDesc" placeholder="한 줄씩 줄바꿈해서 3줄로 적어주세요"></textarea></div>
+      <p class="form-msg" id="uploadMsg"></p>
+      <div class="overlay-actions">
+        <button class="overlay-btn-primary" id="uploadSubmitBtn">올리기</button>
+        <button class="overlay-btn-secondary" id="uploadCloseBtn">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin overlay -->
+  <div class="overlay" id="adminOverlay">
+    <div class="overlay-card">
+      <h3>관리자</h3>
+      <p class="desc-text">부적절한 참가자나 앱의 카드에 있는 🚫 버튼을 눌러<br>관리자 비밀번호로 숨길 수 있어요.</p>
+      <div class="overlay-actions">
+        <button class="overlay-btn-secondary" id="adminCloseBtn">닫기</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    async function loadApps() {
-      const gallery = document.getElementById('gallery');
-      const countEl = document.getElementById('app-count');
+    const SUPABASE_URL = 'https://yapenvwinwwqjmrysxiu.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_l5ZXgm6gJ1eWkWD_RnGR4w_564Opo3c';
+    const CHALLENGE_DAYS = 30;
+
+    let participants = [];
+    let appsByParticipant = {};
+
+    function sbHeaders() {
+      return {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      };
+    }
+
+    async function sbSelect(path) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: sbHeaders() });
+      if (!res.ok) throw new Error(`조회 실패 (${res.status})`);
+      return res.json();
+    }
+
+    async function sbRpc(fn, body) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+        method: 'POST',
+        headers: sbHeaders(),
+        body: JSON.stringify(body)
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        const msg = (data && (data.message || data.hint)) || `요청 실패 (${res.status})`;
+        throw new Error(msg);
+      }
+      return data;
+    }
+
+    async function init() {
+      const grid = document.getElementById('participantGrid');
       try {
-        const res = await fetch('apps.json', { cache: 'no-cache' });
-        if (!res.ok) throw new Error('apps.json을 불러오지 못했습니다 (' + res.status + ')');
-        const apps = await res.json();
+        const [participantsData, appsData] = await Promise.all([
+          sbSelect('gallery_participants_public?select=*&order=created_at.asc'),
+          sbSelect('gallery_apps_public?select=*&order=day_number.asc')
+        ]);
+        participants = participantsData;
+        appsByParticipant = {};
+        appsData.forEach(app => {
+          (appsByParticipant[app.participant_id] ||= []).push(app);
+        });
 
-        if (!Array.isArray(apps) || apps.length === 0) {
-          gallery.innerHTML = '<p class="empty">아직 등록된 앱이 없어요. 첫 앱을 추가해보세요!</p>';
-          return;
-        }
-
-        apps.sort((a, b) => (b.day ?? 0) - (a.day ?? 0));
-
-        gallery.innerHTML = apps.map(renderCard).join('');
-        countEl.textContent = `현재 ${apps.length}개의 앱이 등록되어 있어요.`;
+        renderParticipantList();
+        document.getElementById('footer-note').textContent =
+          `현재 ${participants.length}명이 챌린지에 참가하고 있어요.`;
       } catch (err) {
-        gallery.innerHTML =
-          '<p class="error">앱 목록을 불러오는 중 문제가 생겼어요.<br>' +
-          '이 페이지를 로컬 파일로 직접 열면 브라우저 보안 정책 때문에 apps.json을 읽지 못할 수 있어요.<br>' +
-          '로컬 서버로 실행하거나 GitHub Pages 배포본에서 확인해주세요.</p>';
+        grid.innerHTML =
+          '<p class="error">참가자 정보를 불러오는 중 문제가 생겼어요.<br>인터넷 연결을 확인하고 새로고침해주세요.</p>';
         console.error(err);
       }
     }
 
-    function renderCard(app) {
-      const dayLabel = app.day != null ? `Day ${String(app.day).padStart(2, '0')}` : '';
-      const name = escapeHtml(app.name || app.folder || '이름 없는 앱');
-      const link = app.folder ? `${app.folder}/index.html` : '#';
-      const descItems = Array.isArray(app.description)
-        ? app.description
-        : (typeof app.description === 'string' ? app.description.split('\n') : []);
+    function todayLocalDate() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    }
 
-      const thumb = app.screenshot
-        ? `<img src="${escapeHtml(app.screenshot)}" alt="${name} 스크린샷"
-             onerror="this.parentElement.innerHTML='${escapeHtml(name)}'">`
-        : name;
+    function currentStreak(apps) {
+      const days = new Set(apps.map(a => a.day_number));
+      let streak = 0;
+      while (days.has(streak + 1)) streak++;
+      return streak;
+    }
 
+    function progressInfo(apps) {
+      const count = new Set(apps.map(a => a.day_number)).size;
+      const capped = Math.min(count, CHALLENGE_DAYS);
+      const pct = Math.round((capped / CHALLENGE_DAYS) * 100);
+      const done = count >= CHALLENGE_DAYS;
+      return { count, pct, done };
+    }
+
+    function initials(name) {
+      return (name || '').trim().slice(0, 1) || '?';
+    }
+
+    function escapeHtml(str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function renderParticipantList() {
+      const grid = document.getElementById('participantGrid');
+      if (!participants.length) {
+        grid.innerHTML = '<p class="empty">아직 참가자가 없어요. 첫 참가자가 되어보세요!</p>';
+        return;
+      }
+      grid.innerHTML = participants.map(p => {
+        const apps = appsByParticipant[p.id] || [];
+        const { count, pct, done } = progressInfo(apps);
+        const streak = currentStreak(apps);
+        const recent = apps.slice().sort((a, b) => b.day_number - a.day_number)[0];
+        const label = done ? '🎉 챌린지 완주!' : `${count} / ${CHALLENGE_DAYS}일`;
+        return `
+          <div class="p-card" data-id="${escapeHtml(p.id)}">
+            <button class="hide-btn" data-hide-type="participant" data-hide-id="${escapeHtml(p.id)}" title="숨기기">🚫</button>
+            <button class="p-card-click" data-open="${escapeHtml(p.id)}">
+              <div class="p-head">
+                <div class="avatar">${escapeHtml(initials(p.name))}</div>
+                <div>
+                  <h3 class="p-name">${escapeHtml(p.name)}</h3>
+                  ${p.instagram ? `<span class="p-insta">@${escapeHtml(p.instagram)}</span>` : ''}
+                </div>
+              </div>
+              <div>
+                <div class="progress-label"><span>${label}</span><span>${pct}%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+              </div>
+              <div class="p-meta-row"><span>🔥 연속 ${streak}일</span><span>앱 ${apps.length}개</span></div>
+              ${recent ? `<div class="p-recent">최근: Day ${recent.day_number} · ${escapeHtml(recent.name)}</div>` : ''}
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('[data-open]').forEach(el => {
+        el.addEventListener('click', () => showParticipantDetail(el.dataset.open));
+      });
+      wireHideButtons(grid);
+    }
+
+    let activeParticipantId = null;
+
+    function showParticipantDetail(id) {
+      const participant = participants.find(p => p.id === id);
+      if (!participant) return;
+      activeParticipantId = id;
+      const apps = (appsByParticipant[id] || []).slice().sort((a, b) => b.day_number - a.day_number);
+      const { count, pct, done } = progressInfo(apps);
+
+      document.getElementById('detailAvatar').textContent = initials(participant.name);
+      document.getElementById('detailName').textContent = participant.name;
+      const instaLink = document.getElementById('detailInsta');
+      if (participant.instagram) {
+        instaLink.href = `https://www.instagram.com/${encodeURIComponent(participant.instagram)}/`;
+        instaLink.textContent = `@${participant.instagram}`;
+        instaLink.style.display = '';
+      } else {
+        instaLink.style.display = 'none';
+      }
+      document.getElementById('detailProgressLabel').textContent = done ? '🎉 챌린지 완주!' : `${count} / ${CHALLENGE_DAYS}일`;
+      document.getElementById('detailProgressPct').textContent = `${pct}%`;
+      document.getElementById('detailProgressFill').style.width = `${pct}%`;
+
+      const detailGrid = document.getElementById('detailGrid');
+      detailGrid.innerHTML = apps.length ? apps.map(renderAppCard).join('') : '<p class="empty">아직 등록된 앱이 없어요.</p>';
+      wireHideButtons(detailGrid);
+
+      showScreen('participantDetailScreen');
+      window.scrollTo(0, 0);
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+    }
+
+    document.getElementById('backBtn').addEventListener('click', () => showScreen('participantListScreen'));
+
+    function renderAppCard(app) {
+      const name = escapeHtml(app.name);
+      const link = app.url || '#';
       return `
         <article class="card">
-          <div class="thumb">${thumb}</div>
+          <button class="hide-btn" data-hide-type="app" data-hide-id="${escapeHtml(app.id)}" title="숨기기">🚫</button>
           <div class="card-body">
-            ${dayLabel ? `<span class="day-badge">${dayLabel}</span>` : ''}
-            <h2>${name}</h2>
-            <ul class="desc">
-              ${descItems.map(line => `<li>${escapeHtml(line)}</li>`).join('')}
-            </ul>
-            <a class="open-link" href="${link}">앱 열어보기 →</a>
+            <span class="day-badge">Day ${String(app.day_number).padStart(2, '0')}</span>
+            <h3>${name}</h3>
+            <p class="desc">${escapeHtml(app.description)}</p>
+            <a class="open-link" href="${escapeHtml(link)}">앱 열어보기 →</a>
           </div>
         </article>
       `;
     }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    /* ---------- Join ---------- */
+    const joinOverlay = document.getElementById('joinOverlay');
+    document.getElementById('joinBtn').addEventListener('click', () => {
+      document.getElementById('joinMsg').textContent = '';
+      document.getElementById('joinStartDate').value = todayLocalDate();
+      joinOverlay.classList.add('open');
+    });
+    document.getElementById('joinCloseBtn').addEventListener('click', () => joinOverlay.classList.remove('open'));
+
+    document.getElementById('joinSubmitBtn').addEventListener('click', async () => {
+      const msg = document.getElementById('joinMsg');
+      const name = document.getElementById('joinName').value.trim();
+      const insta = document.getElementById('joinInsta').value.trim().replace(/^@/, '');
+      const pin = document.getElementById('joinPin').value.trim();
+      const startDate = document.getElementById('joinStartDate').value;
+      if (!name) { msg.textContent = '이름을 입력해주세요.'; msg.className = 'form-msg error'; return; }
+      if (!/^\d{4}$/.test(pin)) { msg.textContent = '비밀번호는 4자리 숫자로 입력해주세요.'; msg.className = 'form-msg error'; return; }
+      msg.textContent = '등록 중...'; msg.className = 'form-msg';
+      try {
+        await sbRpc('gallery_join', { p_name: name, p_instagram: insta, p_pin: pin, p_start_date: startDate || null });
+        msg.textContent = '참가 완료! 목록에 추가됐어요.'; msg.className = 'form-msg success';
+        await init();
+        setTimeout(() => joinOverlay.classList.remove('open'), 900);
+      } catch (err) {
+        msg.textContent = err.message || '등록 중 문제가 생겼어요.'; msg.className = 'form-msg error';
+      }
+    });
+
+    /* ---------- Upload app ---------- */
+    const uploadOverlay = document.getElementById('uploadOverlay');
+    document.getElementById('uploadAppBtn').addEventListener('click', () => {
+      document.getElementById('uploadMsg').textContent = '';
+      uploadOverlay.classList.add('open');
+    });
+    document.getElementById('uploadCloseBtn').addEventListener('click', () => uploadOverlay.classList.remove('open'));
+
+    document.getElementById('uploadSubmitBtn').addEventListener('click', async () => {
+      const msg = document.getElementById('uploadMsg');
+      const pin = document.getElementById('uploadPin').value.trim();
+      const day = parseInt(document.getElementById('uploadDay').value, 10);
+      const name = document.getElementById('uploadName').value.trim();
+      const url = document.getElementById('uploadUrl').value.trim();
+      const desc = document.getElementById('uploadDesc').value.trim();
+      if (!activeParticipantId) { msg.textContent = '참가자를 먼저 선택해주세요.'; msg.className = 'form-msg error'; return; }
+      if (!/^\d{4}$/.test(pin)) { msg.textContent = '비밀번호는 4자리 숫자예요.'; msg.className = 'form-msg error'; return; }
+      if (!day || day < 1) { msg.textContent = '며칠차인지 입력해주세요.'; msg.className = 'form-msg error'; return; }
+      if (!name || !url) { msg.textContent = '앱 이름과 주소를 입력해주세요.'; msg.className = 'form-msg error'; return; }
+      msg.textContent = '올리는 중...'; msg.className = 'form-msg';
+      try {
+        await sbRpc('gallery_add_app', {
+          p_participant_id: activeParticipantId, p_pin: pin, p_day_number: day,
+          p_name: name, p_url: url, p_description: desc
+        });
+        msg.textContent = '올렸어요!'; msg.className = 'form-msg success';
+        await init();
+        showParticipantDetail(activeParticipantId);
+        setTimeout(() => uploadOverlay.classList.remove('open'), 900);
+      } catch (err) {
+        msg.textContent = err.message || '올리는 중 문제가 생겼어요.'; msg.className = 'form-msg error';
+      }
+    });
+
+    /* ---------- Admin hide ---------- */
+    const adminOverlay = document.getElementById('adminOverlay');
+    document.getElementById('adminLinkBtn').addEventListener('click', () => adminOverlay.classList.add('open'));
+    document.getElementById('adminCloseBtn').addEventListener('click', () => adminOverlay.classList.remove('open'));
+
+    function wireHideButtons(root) {
+      root.querySelectorAll('[data-hide-type]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const type = btn.dataset.hideType;
+          const id = btn.dataset.hideId;
+          const adminPin = prompt('관리자 비밀번호를 입력하세요');
+          if (!adminPin) return;
+          try {
+            await sbRpc('gallery_admin_set_hidden', {
+              p_admin_pin: adminPin, p_target_table: type, p_target_id: id, p_hidden: true
+            });
+            alert('숨겼어요.');
+            await init();
+            if (activeParticipantId) showParticipantDetail(activeParticipantId);
+          } catch (err) {
+            alert(err.message || '실패했어요.');
+          }
+        });
+      });
     }
 
-    loadApps();
+    init();
   </script>
 </body>
 </html>
