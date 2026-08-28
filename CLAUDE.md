@@ -23,6 +23,7 @@ Open the relevant day's `index.html` directly in a browser — e.g. on Windows: 
 
 - `dayNN-<short-name>/` — one directory per day, each with at minimum an `index.html` and a short `README.md` describing what the app does.
 - `day01-todo/` — todo list app (add/complete/delete/filter, persisted to `localStorage`).
+- `day02-reading-calendar/` — reading calendar: search a book title (Google Books API) to auto-fill its cover/author/pages, log a daily quote on the calendar, mark books finished with reflections, and earn monthly/yearly badges.
 - `index.html` — gallery homepage (root of the site), renders cards from `apps.json`.
 - `apps.json` — the list of apps shown in the gallery.
 
