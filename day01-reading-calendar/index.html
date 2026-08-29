@@ -139,6 +139,96 @@
   }
   .cover-fallback { font-size: 22px; }
 
+  /* ---- Home cards ---- */
+  .home-card {
+    background: var(--surface);
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .greeting-card { display: flex; flex-direction: column; gap: 6px; }
+  .greeting-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .greeting-hi { font-size: 14px; color: var(--text-muted); margin: 0; }
+  .greeting-name { font-size: 23px; font-weight: 800; margin: 2px 0 0; }
+  .greeting-tagline { font-size: 13.5px; color: var(--text-muted); margin: 6px 0 0; }
+  .done-pill {
+    flex-shrink: 0;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .stats-card { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .stat-col { text-align: center; padding: 0 4px; }
+  .stat-col + .stat-col { border-left: 1px solid var(--border); }
+  .stat-label { font-size: 12.5px; color: var(--text-muted); margin: 0 0 6px; }
+  .stat-value { font-size: 26px; font-weight: 800; margin: 0; }
+
+  .progress-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .progress-card-top .label { font-size: 14.5px; color: var(--text-muted); }
+  .progress-card-top .value { font-size: 16px; font-weight: 800; }
+  .big-progress-track { background: var(--accent-soft); border-radius: 999px; height: 14px; overflow: hidden; }
+  .big-progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s ease; }
+
+  .today-card-top { display: flex; justify-content: space-between; align-items: center; }
+  .today-card-top h3 { margin: 0; font-size: 18px; font-weight: 800; }
+  .day-pill { background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 700; padding: 4px 11px; border-radius: 999px; }
+  .today-date-line { font-size: 12.5px; color: var(--text-muted); margin: 6px 0 14px; }
+  .today-inner-box {
+    background: var(--accent-soft);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+  .today-quote { flex: 1; font-size: 16.5px; line-height: 1.75; }
+  .today-cover { flex-shrink: 0; width: 56px; }
+  .today-cover .book-cover { width: 56px; }
+  .today-empty-cta {
+    width: 100%;
+    background: var(--accent-soft);
+    border: 1px dashed var(--accent);
+    color: var(--accent);
+    border-radius: 16px;
+    padding: 24px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+  .outline-btn {
+    width: 100%;
+    background: none;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .link-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-top: 8px;
+    text-align: left;
+  }
+  .share-card-img { width: 100%; border-radius: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
+
   /* ---- Bookshelf ---- */
   .bookshelf-grid {
     display: grid;
@@ -498,6 +588,40 @@
   <div class="topbar"><h1>📖 독서 달력</h1></div>
   <main>
     <section id="calendarScreen" class="screen active">
+      <div class="home-card greeting-card">
+        <div class="greeting-top">
+          <div>
+            <p class="greeting-hi">반가워요 👋</p>
+            <p class="greeting-name" id="greetingName"></p>
+          </div>
+          <span class="done-pill" id="todayDoneBadge" style="display:none;">오늘 인증 완료 ✓</span>
+        </div>
+        <p class="greeting-tagline" id="greetingTagline"></p>
+      </div>
+
+      <div class="home-card stats-card">
+        <div class="stat-col"><p class="stat-label">인증률</p><p class="stat-value" id="statPct">0%</p></div>
+        <div class="stat-col"><p class="stat-label">인증일</p><p class="stat-value" id="statDays">0/30</p></div>
+        <div class="stat-col"><p class="stat-label">완독</p><p class="stat-value" id="statFinished">0권</p></div>
+      </div>
+
+      <div class="home-card">
+        <div class="progress-card-top">
+          <span class="label">30일 진행률</span>
+          <span class="value" id="progressDayLabel">DAY 1 · 0%</span>
+        </div>
+        <div class="big-progress-track"><div class="big-progress-fill" id="progressFill" style="width:0%;"></div></div>
+      </div>
+
+      <div class="home-card">
+        <div class="today-card-top">
+          <h3>오늘의 독서 인증</h3>
+          <span class="day-pill" id="todayCardDayBadge">DAY 1</span>
+        </div>
+        <p class="today-date-line" id="todayCardDate"></p>
+        <div id="todayCardBody"></div>
+      </div>
+
       <div class="month-nav">
         <button id="prevMonthBtn" class="icon-btn">‹</button>
         <h2 id="monthLabel"></h2>
@@ -552,6 +676,28 @@
     <div class="modal-body" id="finishModalBody"></div>
   </div>
 </div>
+
+<div id="nameModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>반가워요 👋</h3></div>
+    <div class="modal-body">
+      <div class="field"><label>뭐라고 부르면 될까요?</label><input type="text" id="nameInput" placeholder="이름 또는 닉네임" maxlength="12"></div>
+      <button class="primary-btn" id="nameSubmitBtn">시작하기</button>
+    </div>
+  </div>
+</div>
+
+<div id="shareCardModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>인증 카드</h3><button class="close-btn" data-close="shareCardModal">✕</button></div>
+    <div class="modal-body">
+      <img class="share-card-img" id="shareCardImg" alt="인증 카드 미리보기">
+      <a class="primary-btn" id="shareCardDownloadBtn" download="reading-day.png" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box;">이미지 저장하기</a>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="coverFileInput" accept="image/*" style="display:none">
 
 <div id="celebrateOverlay" class="celebrate-overlay">
   <div class="celebrate-content" id="celebrateContent">
@@ -759,6 +905,65 @@
     return '<span class="cover-fallback">📖</span>';
   }
 
+  function coverUploadButtonHtml(target) {
+    return '<button class="link-btn" data-cover-target="' + escapeHtml(target) + '">📷 표지 직접 올리기</button>';
+  }
+  function wireCoverButtons(root) {
+    root.querySelectorAll('[data-cover-target]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        state.coverUploadTarget = btn.dataset.coverTarget;
+        document.getElementById('coverFileInput').click();
+      });
+    });
+  }
+  function cropImageToCover(file, targetW, targetH) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = new Image();
+        img.onload = function () {
+          var canvas = document.createElement('canvas');
+          canvas.width = targetW; canvas.height = targetH;
+          var ctx = canvas.getContext('2d');
+          var srcRatio = img.width / img.height;
+          var targetRatio = targetW / targetH;
+          var sx, sy, sw, sh;
+          if (srcRatio > targetRatio) { sh = img.height; sw = sh * targetRatio; sx = (img.width - sw) / 2; sy = 0; }
+          else { sw = img.width; sh = sw / targetRatio; sx = 0; sy = (img.height - sh) / 2; }
+          ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetW, targetH);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  document.getElementById('coverFileInput').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    cropImageToCover(file, 360, 504).then(function (dataUrl) {
+      if (state.coverUploadTarget === 'pending' && state.pendingBook) {
+        state.pendingBook.thumbnail = dataUrl;
+        renderQuoteStep();
+      } else {
+        var book = state.books.filter(function (b) { return b.id === state.coverUploadTarget; })[0];
+        if (!book) return;
+        book.thumbnail = dataUrl;
+        saveBooks();
+        renderCalendar();
+        renderTopCards();
+        renderBookshelf();
+        if (lastDetailOpener) lastDetailOpener();
+      }
+    }).catch(function () {
+      alert('이미지를 불러오지 못했어요. 다른 사진으로 시도해주세요.');
+    });
+  });
+
   // ---------- Screens / tabs ----------
   var screens = document.querySelectorAll('.screen');
   var tabBtns = document.querySelectorAll('.tab-btn');
@@ -826,6 +1031,7 @@
   });
   document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
     overlay.addEventListener('click', function (e) {
+      if (overlay.id === 'nameModal') return;
       if (e.target === overlay) overlay.classList.remove('open');
     });
   });
@@ -990,6 +1196,7 @@
       publisherLineHtml(book) +
       '<span class="category-badge">' + escapeHtml(category.label) + '</span>' +
       '<p class="tagline">' + escapeHtml(book.tagline) + '</p>' +
+      coverUploadButtonHtml('pending') +
       '</div></div>' +
       '<div class="field"><label>오늘 마음에 남은 문장</label>' +
       '<textarea id="quoteInput" placeholder="책에서 마음에 남은 구절을 적어보세요"></textarea></div>' +
@@ -999,6 +1206,7 @@
       saveEntryWithBook(state.pendingDateKey, book, quote);
       closeModal('searchModal');
     });
+    wireCoverButtons(searchModalBody);
   }
 
   function saveEntryWithBook(key, book, quote) {
@@ -1009,12 +1217,14 @@
     state.entries[key] = { bookId: book.id, quote: quote };
     saveEntries();
     renderCalendar();
+    renderTopCards();
     maybeAwardBadge(key);
   }
 
   // ---------- Day / book detail modal ----------
   var detailModalTitle = document.getElementById('detailModalTitle');
   var detailModalBody = document.getElementById('detailModalBody');
+  var lastDetailOpener = null;
 
   function bookInfoHtml(book) {
     var category = CATEGORY_MAP[book.categoryId] || CATEGORY_MAP.default;
@@ -1026,6 +1236,7 @@
       publisherLineHtml(book) +
       '<span class="category-badge">' + escapeHtml(category.label) + '</span>' +
       '<p class="tagline">' + escapeHtml(book.tagline) + '</p>' +
+      coverUploadButtonHtml(book.id) +
       '</div></div>';
   }
 
@@ -1047,6 +1258,7 @@
   }
 
   function openDetailModal(key) {
+    lastDetailOpener = function () { openDetailModal(key); };
     var entry = state.entries[key];
     var book = state.books.filter(function (b) { return b.id === entry.bookId; })[0];
     if (!book) return;
@@ -1062,18 +1274,22 @@
       state.entries[key].quote = document.getElementById('editQuote').value.trim();
       saveEntries();
       closeModal('detailModal');
+      renderTopCards();
     });
     document.getElementById('deleteEntryBtn').addEventListener('click', function () {
       delete state.entries[key];
       saveEntries();
       closeModal('detailModal');
       renderCalendar();
+      renderTopCards();
     });
     wireFinishButtons(detailModalBody);
+    wireCoverButtons(detailModalBody);
     openModal('detailModal');
   }
 
   function openBookDetail(bookId) {
+    lastDetailOpener = function () { openBookDetail(bookId); };
     var book = state.books.filter(function (b) { return b.id === bookId; })[0];
     if (!book) return;
     var dates = Object.keys(state.entries).filter(function (k) { return state.entries[k].bookId === bookId; }).sort();
@@ -1089,6 +1305,7 @@
     detailModalBody.innerHTML = bookInfoHtml(book) +
       '<p class="section-title">기록한 문장들</p>' + quotesHtml + finishSectionHtml(book);
     wireFinishButtons(detailModalBody);
+    wireCoverButtons(detailModalBody);
     openModal('detailModal');
   }
 
@@ -1113,6 +1330,7 @@
       closeModal('detailModal');
       renderCalendar();
       renderBookshelf();
+      renderTopCards();
     });
     openModal('finishModal');
   }
@@ -1220,9 +1438,229 @@
     celebrateOverlay.classList.add('open');
   }
 
+  // ---------- Home cards / onboarding ----------
+  var USERNAME_KEY = 'rc_username';
+  function getUsername() { return localStorage.getItem(USERNAME_KEY) || ''; }
+  function setUsername(name) { localStorage.setItem(USERNAME_KEY, name); }
+
+  var WEEKDAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
+  function formatFullDateLabel(date) {
+    return (date.getMonth() + 1) + '월 ' + date.getDate() + '일 (' + WEEKDAY_NAMES[date.getDay()] + ')';
+  }
+
+  var GREETING_TAGLINES_DONE = [
+    '오늘의 한 문장까지 잘 채웠어요. 참 잘했어요 ☺️',
+    '오늘도 한 페이지, 마음까지 채워졌네요.',
+    '이렇게 하루하루가 쌓여 한 해가 되는 거겠죠.'
+  ];
+  var GREETING_TAGLINES_TODO = [
+    '오늘도 한 줄, 천천히 채워가요 🌿',
+    '바쁜 하루여도 한 문장이면 충분해요.',
+    '오늘 만난 문장 하나, 여기에 남겨보세요.'
+  ];
+  function pickGreetingTagline(doneToday) {
+    var pool = doneToday ? GREETING_TAGLINES_DONE : GREETING_TAGLINES_TODO;
+    return pool[hashStr(todayKey()) % pool.length];
+  }
+
+  function computeHomeStats() {
+    var today = new Date();
+    var y = today.getFullYear(), m = today.getMonth(), d = today.getDate();
+    var count = 0;
+    for (var dd = 1; dd <= d; dd++) {
+      if (state.entries[dateKey(y, m, dd)]) count++;
+    }
+    var pct = Math.round((Math.min(count, 30) / 30) * 100);
+    var finishedCount = state.books.filter(function (b) { return b.finished; }).length;
+    return { dayOfMonth: d, entriesThisMonth: count, pct: pct, finishedCount: finishedCount };
+  }
+
+  function renderTopCards() {
+    var stats = computeHomeStats();
+    var name = getUsername() || '나';
+    var todayEntry = state.entries[todayKey()];
+    var doneToday = !!todayEntry;
+
+    document.getElementById('greetingName').textContent = name + '님의 독서 달력';
+    document.getElementById('greetingTagline').textContent = pickGreetingTagline(doneToday);
+    document.getElementById('todayDoneBadge').style.display = doneToday ? '' : 'none';
+
+    document.getElementById('statPct').textContent = stats.pct + '%';
+    document.getElementById('statDays').textContent = stats.entriesThisMonth + '/30';
+    document.getElementById('statFinished').textContent = stats.finishedCount + '권';
+
+    document.getElementById('progressDayLabel').textContent = 'DAY ' + stats.dayOfMonth + ' · ' + stats.pct + '%';
+    document.getElementById('progressFill').style.width = stats.pct + '%';
+    document.getElementById('todayCardDayBadge').textContent = 'DAY ' + stats.dayOfMonth;
+
+    renderTodayCard(todayEntry);
+  }
+
+  function renderTodayCard(entry) {
+    var dateEl = document.getElementById('todayCardDate');
+    var box = document.getElementById('todayCardBody');
+    var dateStr = formatFullDateLabel(new Date());
+    if (entry) {
+      var book = state.books.filter(function (b) { return b.id === entry.bookId; })[0];
+      dateEl.textContent = dateStr + ' · 오늘 쓴 글을 수정할 수 있어요';
+      box.innerHTML =
+        '<div class="today-inner-box" id="todayInnerBox">' +
+        '<div class="today-quote">' + escapeHtml(entry.quote || '오늘은 문장을 남기지 않았어요.') + '</div>' +
+        '<div class="today-cover">' + bookCoverHtml(book) + '</div>' +
+        '</div>' +
+        '<button class="outline-btn" id="saveShareCardBtn">인증 카드 저장</button>';
+      document.getElementById('todayInnerBox').addEventListener('click', function () { openDetailModal(todayKey()); });
+      document.getElementById('saveShareCardBtn').addEventListener('click', function (e) {
+        e.stopPropagation();
+        openShareCard(entry, book);
+      });
+    } else {
+      dateEl.textContent = dateStr + ' · 아직 기록하지 않았어요';
+      box.innerHTML = '<button class="today-empty-cta" id="todayEmptyCta">오늘의 문장을 남겨보세요 ✏️</button>';
+      document.getElementById('todayEmptyCta').addEventListener('click', function () { openSearchModal(todayKey()); });
+    }
+  }
+
+  function ensureUsername() {
+    if (getUsername()) return;
+    openModal('nameModal');
+  }
+  document.getElementById('nameSubmitBtn').addEventListener('click', function () {
+    var val = document.getElementById('nameInput').value.trim();
+    if (!val) { document.getElementById('nameInput').focus(); return; }
+    setUsername(val);
+    closeModal('nameModal');
+    renderTopCards();
+  });
+
+  // ---------- Share card ----------
+  function loadImageMaybeCors(url) {
+    return new Promise(function (resolve) {
+      if (!url) { resolve(null); return; }
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { resolve(null); };
+      img.src = url;
+    });
+  }
+
+  function wrapCanvasText(ctx, text, maxWidth) {
+    var lines = [];
+    var current = '';
+    for (var i = 0; i < text.length; i++) {
+      var test = current + text[i];
+      if (ctx.measureText(test).width > maxWidth && current) {
+        lines.push(current);
+        current = text[i];
+      } else {
+        current = test;
+      }
+    }
+    if (current) lines.push(current);
+    return lines;
+  }
+
+  function roundRectPath(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawRoundedImage(ctx, img, x, y, w, h, r) {
+    ctx.save();
+    roundRectPath(ctx, x, y, w, h, r);
+    ctx.clip();
+    var srcRatio = img.width / img.height, dstRatio = w / h;
+    var sx, sy, sw, sh;
+    if (srcRatio > dstRatio) { sh = img.height; sw = sh * dstRatio; sx = (img.width - sw) / 2; sy = 0; }
+    else { sw = img.width; sh = sw / dstRatio; sx = 0; sy = (img.height - sh) / 2; }
+    ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+    ctx.restore();
+  }
+
+  function buildShareCanvas(entry, book, dayNumber, coverImg) {
+    var canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 1920;
+    var ctx = canvas.getContext('2d');
+
+    var styles = getComputedStyle(document.documentElement);
+    var bg = (styles.getPropertyValue('--bg') || '#fdf6ee').trim();
+    var accent = (styles.getPropertyValue('--accent') || '#c1685a').trim();
+    var accentSoft = (styles.getPropertyValue('--accent-soft') || '#f3e2db').trim();
+    var text = (styles.getPropertyValue('--text') || '#3b2f2a').trim();
+    var textMuted = (styles.getPropertyValue('--text-muted') || '#8a7b6c').trim();
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = accent;
+    ctx.font = 'bold 44px sans-serif';
+    ctx.fillText('📖 독서 달력', 540, 150);
+
+    ctx.fillStyle = textMuted;
+    ctx.font = '34px sans-serif';
+    ctx.fillText(formatFullDateLabel(new Date()) + ' · DAY ' + dayNumber, 540, 205);
+
+    var boxX = 90, boxY = 280, boxW = 900, boxH = 900;
+    ctx.fillStyle = accentSoft;
+    roundRectPath(ctx, boxX, boxY, boxW, boxH, 40);
+    ctx.fill();
+
+    if (coverImg) {
+      try { drawRoundedImage(ctx, coverImg, 540 - 130, boxY + 60, 260, 364, 20); } catch (e) {}
+    }
+
+    ctx.fillStyle = text;
+    ctx.font = '38px sans-serif';
+    ctx.textAlign = 'center';
+    var quote = (entry && entry.quote) || '오늘은 문장을 남기지 않았어요.';
+    var lines = wrapCanvasText(ctx, quote, boxW - 120);
+    var lineHeight = 62;
+    var startY = boxY + 60 + 364 + 80;
+    lines.slice(0, 8).forEach(function (line, i) {
+      ctx.fillText(line, 540, startY + i * lineHeight);
+    });
+
+    if (book && book.title) {
+      ctx.fillStyle = textMuted;
+      ctx.font = '30px sans-serif';
+      ctx.fillText(book.title, 540, boxY + boxH - 40);
+    }
+
+    ctx.fillStyle = textMuted;
+    ctx.font = '26px sans-serif';
+    ctx.fillText('독서 달력 · one-app-a-day', 540, 1860);
+
+    try {
+      return canvas.toDataURL('image/png');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function openShareCard(entry, book) {
+    var stats = computeHomeStats();
+    loadImageMaybeCors(book && book.thumbnail).then(function (img) {
+      var dataUrl = buildShareCanvas(entry, book, stats.dayOfMonth, img);
+      if (!dataUrl) dataUrl = buildShareCanvas(entry, book, stats.dayOfMonth, null);
+      document.getElementById('shareCardImg').src = dataUrl;
+      document.getElementById('shareCardDownloadBtn').href = dataUrl;
+      document.getElementById('shareCardDownloadBtn').download = 'reading-day' + stats.dayOfMonth + '.png';
+      openModal('shareCardModal');
+    });
+  }
+
   // ---------- Init ----------
   loadState();
   renderCalendar();
+  renderTopCards();
+  ensureUsername();
 })();
 </script>
 </body>
