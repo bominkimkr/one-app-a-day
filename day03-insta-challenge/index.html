@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>인스타그램 30일 챌린지</title>
+<style>
+  :root {
+    --bg: #fdf6f4;
+    --surface: #ffffff;
+    --text: #2b2230;
+    --text-muted: #8a7d87;
+    --accent: #d6249f;
+    --accent-2: #f58529;
+    --accent-soft: #fbe3f1;
+    --border: #f0e2ea;
+    --track: #f3e6ee;
+    --danger: #c0392b;
+    --shadow: 0 2px 10px rgba(90, 40, 70, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1720;
+      --surface: #2a232c;
+      --text: #f3ece4;
+      --text-muted: #b8a4b0;
+      --accent: #e85cc0;
+      --accent-2: #f7a35c;
+      --accent-soft: #3a2833;
+      --border: #3a2e37;
+      --track: #362a33;
+      --danger: #e57373;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+                 "Noto Sans KR", "Malgun Gothic", sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  #app { max-width: 520px; margin: 0 auto; min-height: 100vh; padding-bottom: 40px; }
+  .topbar { padding: 26px 20px 6px; text-align: center; }
+  .topbar h1 { margin: 0; font-size: 23px; background: linear-gradient(90deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .topbar p { margin: 4px 0 0; color: var(--text-muted); font-size: 14px; }
+  main { padding: 16px 16px 24px; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .join-row { margin-bottom: 18px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border: none; border-radius: 999px; padding: 13px 20px; font-size: 15px; font-weight: 700;
+    cursor: pointer; text-decoration: none; width: 100%; min-height: 48px;
+  }
+  .btn-primary { background: linear-gradient(90deg, var(--accent-2), var(--accent)); color: #fff; }
+  .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary { background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; padding: 8px; }
+
+  .p-list { display: flex; flex-direction: column; gap: 12px; }
+  .p-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); }
+  .p-card-click { background: none; border: none; padding: 0; width: 100%; text-align: left; display: flex; flex-direction: column; gap: 10px; cursor: pointer; color: inherit; font: inherit; }
+  .p-head { display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-2), var(--accent)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0; }
+  .p-name { margin: 0; font-size: 17px; display: flex; align-items: center; gap: 6px; }
+  .p-insta { margin: 1px 0 0; font-size: 12.5px; color: var(--accent); }
+  .today-badge { font-size: 11px; background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 999px; font-weight: 700; }
+  .progress-row { display: flex; align-items: center; gap: 10px; }
+  .progress-track { flex: 1; background: var(--track); border-radius: 999px; height: 9px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-2), var(--accent)); border-radius: 999px; }
+  .progress-pct { font-size: 12.5px; color: var(--text-muted); min-width: 34px; text-align: right; }
+  .streak-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); }
+  .hide-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 4px 6px; border-radius: 8px; opacity: 0.45; }
+  .hide-btn:hover { opacity: 1; color: var(--danger); }
+
+  .back-btn { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; color: var(--text-muted); font-size: 14px; cursor: pointer; padding: 6px 0; margin-bottom: 14px; }
+  .detail-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+  .detail-head .avatar { width: 58px; height: 58px; font-size: 22px; }
+  .detail-head h2 { margin: 0 0 2px; font-size: 21px; }
+  .detail-progress { margin: 16px 0 18px; }
+  .detail-actions { display: flex; gap: 10px; margin-bottom: 20px; }
+
+  .complete-banner {
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    color: #fff; border-radius: 16px; padding: 18px; margin-bottom: 20px; text-align: center;
+  }
+  .complete-banner h3 { margin: 0 0 8px; font-size: 19px; }
+  .complete-banner p { margin: 2px 0; font-size: 14px; opacity: 0.95; }
+
+  .month-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 8px 0 12px; }
+  .month-nav h3 { margin: 0; font-size: 17px; min-width: 110px; text-align: center; }
+  .icon-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 17px; cursor: pointer; }
+  .weekday-row { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: var(--text-muted); font-size: 12.5px; margin-bottom: 5px; }
+  .weekday-row span:first-child { color: #d1685a; }
+  .weekday-row span:last-child { color: #6a8ec1; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .day-cell, .day-cell-empty { aspect-ratio: 1; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; color: var(--text-muted); cursor: pointer; position: relative; }
+  .day-cell-empty { visibility: hidden; }
+  .day-cell.today { border-color: var(--accent); border-width: 2px; }
+  .day-cell.has-post { background: var(--accent-soft); color: var(--text); font-weight: 700; }
+  .day-cell .post-icon { font-size: 15px; }
+
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13.5px; color: var(--text-muted); margin-bottom: 5px; }
+  .field input, .field textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 16px; font-family: inherit; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30, 15, 25, 0.5); z-index: 50; align-items: flex-end; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg); width: 100%; max-width: 520px; max-height: 88vh; border-radius: 20px 20px 0 0; overflow-y: auto; animation: slideUp 0.2s ease; }
+  @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-header { position: sticky; top: 0; background: var(--bg); display: flex; align-items: center; justify-content: space-between; padding: 18px 18px 10px; border-bottom: 1px solid var(--border); }
+  .modal-header h3 { margin: 0; font-size: 18px; }
+  .close-btn { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; width: 40px; height: 40px; }
+  .modal-body { padding: 16px 18px 28px; }
+  .form-msg { font-size: 13.5px; margin: 4px 0 10px; min-height: 18px; }
+  .form-msg.error { color: var(--danger); }
+  .form-msg.success { color: #2e7d32; }
+
+  .post-type-badge { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 10px; }
+  .post-type-badge.reel { background: #fde3ea; color: #d6249f; }
+  .post-type-badge.post { background: #e3edfd; color: #3468c0; }
+  @media (prefers-color-scheme: dark) {
+    .post-type-badge.reel { background: #4a2438; color: #f7a3d3; }
+    .post-type-badge.post { background: #223349; color: #9dbdf2; }
+  }
+  .embed-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+  .empty { color: var(--text-muted); text-align: center; padding: 40px 20px; }
+
+  .share-card-preview { border-radius: 16px; width: 100%; margin-bottom: 14px; box-shadow: var(--shadow); }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <h1>📸 인스타그램 30일 챌린지</h1>
+    <p>매일 릴스나 게시글로 30일을 채워봐요</p>
+  </div>
+  <main>
+    <section id="listScreen" class="screen active">
+      <div class="join-row"><button class="btn btn-primary" id="joinBtn">🙋 챌린지 참가하기</button></div>
+      <div id="participantList" class="p-list" aria-live="polite"></div>
+    </section>
+
+    <section id="detailScreen" class="screen">
+      <button class="back-btn" id="backBtn">← 목록으로</button>
+      <div class="detail-head">
+        <div class="avatar" id="detailAvatar"></div>
+        <div>
+          <h2 id="detailName"></h2>
+          <a class="p-insta" id="detailInsta" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+      </div>
+      <div class="detail-progress">
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="detailProgressFill"></div></div>
+          <span class="progress-pct" id="detailProgressPct"></span>
+        </div>
+        <div class="streak-row" style="margin-top:8px;"><span id="detailStreakLabel"></span><span id="detailDayLabel"></span></div>
+      </div>
+
+      <div id="completeBanner"></div>
+
+      <div class="detail-actions">
+        <button class="btn btn-primary" id="checkinBtn">✅ 오늘 인증하기</button>
+        <button class="btn btn-outline" id="shareBtn">🖼️ 공유 카드</button>
+      </div>
+
+      <div class="month-nav">
+        <button class="icon-btn" id="prevMonthBtn">‹</button>
+        <h3 id="monthLabel"></h3>
+        <button class="icon-btn" id="nextMonthBtn">›</button>
+      </div>
+      <div class="weekday-row"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+      <div id="calGrid" class="cal-grid"></div>
+    </section>
+  </main>
+</div>
+
+<!-- Join modal -->
+<div class="modal-overlay" id="joinModal">
+  <div class="modal">
+    <div class="modal-header"><h3>챌린지 참가하기</h3><button class="close-btn" data-close="joinModal">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>이름</label><input type="text" id="joinName" placeholder="닉네임 또는 이름"></div>
+      <div class="field"><label>인스타그램 아이디</label><input type="text" id="joinInsta" placeholder="@ 없이 아이디만"></div>
+      <div class="field"><label>비밀번호 (4자리 숫자)</label><input type="password" id="joinPin" inputmode="numeric" maxlength="4" placeholder="내 기록을 지키는 비밀번호"></div>
+      <p class="form-msg" id="joinMsg"></p>
+      <button class="btn btn-primary" id="joinSubmitBtn">참가하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- Check-in modal -->
+<div class="modal-overlay" id="checkinModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="checkinTitle">오늘 인증하기</h3><button class="close-btn" data-close="checkinModal">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>날짜</label><input type="date" id="checkinDate"></div>
+      <div class="field"><label>인스타그램 릴스/게시글 링크</label><input type="text" id="checkinUrl" placeholder="https://www.instagram.com/reel/..."></div>
+      <div class="field"><label>비밀번호</label><input type="password" id="checkinPin" inputmode="numeric" maxlength="4" placeholder="참가할 때 정한 비밀번호"></div>
+      <p class="form-msg" id="checkinMsg"></p>
+      <button class="btn btn-primary" id="checkinSubmitBtn">기록하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- Day detail modal (view embed) -->
+<div class="modal-overlay" id="dayModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="dayModalTitle">기록</h3><button class="close-btn" data-close="dayModal">✕</button></div>
+    <div class="modal-body" id="dayModalBody"></div>
+  </div>
+</div>
+
+<!-- Share card modal -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal">
+    <div class="modal-header"><h3>공유 카드</h3><button class="close-btn" data-close="shareModal">✕</button></div>
+    <div class="modal-body">
+      <img class="share-card-preview" id="shareCardImg" alt="공유 카드 미리보기">
+      <a class="btn btn-primary" id="shareDownloadBtn" download="challenge-share.png">이미지 저장하기</a>
+    </div>
+  </div>
+</div>
+
+<script async src="https://www.instagram.com/embed.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const SUPABASE_URL = 'https://yapenvwinwwqjmrysxiu.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_l5ZXgm6gJ1eWkWD_RnGR4w_564Opo3c';
+  const CHALLENGE_DAYS = 30;
+
+  let participants = [];
+  let postsByParticipant = {};
+  let activeParticipantId = null;
+  let calYear, calMonth;
+
+  function sbHeaders() {
+    return { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' };
+  }
+  async function sbSelect(path) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: sbHeaders() });
+    if (!res.ok) throw new Error(`조회 실패 (${res.status})`);
+    return res.json();
+  }
+  async function sbRpc(fn, body) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, { method: 'POST', headers: sbHeaders(), body: JSON.stringify(body) });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      const msg = (data && (data.message || data.hint)) || `요청 실패 (${res.status})`;
+      throw new Error(msg);
+    }
+    return data;
+  }
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function todayLocalDate() {
+    const d = new Date();
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  }
+  function addDaysStr(dateStr, delta) {
+    const d = new Date(dateStr + 'T00:00:00');
+    d.setDate(d.getDate() + delta);
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  }
+  function escapeHtml(str) {
+    return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function initials(name) { return (name || '').trim().slice(0, 1) || '?'; }
+
+  function computeStreak(dates) {
+    const daySet = new Set(dates);
+    const t = todayLocalDate();
+    const y = addDaysStr(t, -1);
+    let anchor = daySet.has(t) ? t : (daySet.has(y) ? y : null);
+    if (!anchor) return 0;
+    let streak = 0, cursor = anchor;
+    while (daySet.has(cursor)) { streak++; cursor = addDaysStr(cursor, -1); }
+    return streak;
+  }
+  function longestStreak(dates) {
+    const sorted = Array.from(new Set(dates)).sort();
+    let longest = 0, run = 0, prev = null;
+    for (const d of sorted) {
+      if (prev && addDaysStr(prev, 1) === d) run++; else run = 1;
+      longest = Math.max(longest, run);
+      prev = d;
+    }
+    return longest;
+  }
+  function progressInfo(posts) {
+    const count = new Set(posts.map(p => p.post_date)).size;
+    const pct = Math.round((Math.min(count, CHALLENGE_DAYS) / CHALLENGE_DAYS) * 100);
+    return { count, pct, done: count >= CHALLENGE_DAYS };
+  }
+
+  function parseInstagramUrl(url) {
+    if (/instagram\.com\/stories\//i.test(url)) {
+      return { error: '스토리는 기록할 수 없어요. 릴스나 게시글 링크를 넣어주세요.' };
+    }
+    if (/instagram\.com\/(?:[^/?#]+\/)?reels?\/[A-Za-z0-9_-]+/i.test(url)) return { type: 'reel' };
+    if (/instagram\.com\/(?:[^/?#]+\/)?p\/[A-Za-z0-9_-]+/i.test(url)) return { type: 'post' };
+    return { error: '인스타그램 게시글/릴스 주소가 맞는지 확인해주세요.' };
+  }
+
+  function processEmbeds(retries) {
+    if (window.instgrm && window.instgrm.Embeds) {
+      window.instgrm.Embeds.process();
+    } else if ((retries || 0) < 15) {
+      setTimeout(() => processEmbeds((retries || 0) + 1), 300);
+    }
+  }
+
+  async function init() {
+    const list = document.getElementById('participantList');
+    try {
+      const [pData, postData] = await Promise.all([
+        sbSelect('insta_participants_public?select=*&order=created_at.asc'),
+        sbSelect('insta_posts_public?select=*&order=post_date.asc')
+      ]);
+      participants = pData;
+      postsByParticipant = {};
+      postData.forEach(p => { (postsByParticipant[p.participant_id] ||= []).push(p); });
+      renderList();
+    } catch (err) {
+      list.innerHTML = '<p class="empty">참가자 정보를 불러오는 중 문제가 생겼어요.<br>인터넷 연결을 확인하고 새로고침해주세요.</p>';
+      console.error(err);
+    }
+  }
+
+  function renderList() {
+    const list = document.getElementById('participantList');
+    if (!participants.length) {
+      list.innerHTML = '<p class="empty">아직 참가자가 없어요. 첫 참가자가 되어보세요!</p>';
+      return;
+    }
+    const today = todayLocalDate();
+    list.innerHTML = participants.map(p => {
+      const posts = postsByParticipant[p.id] || [];
+      const { pct, done } = progressInfo(posts);
+      const streak = computeStreak(posts.map(x => x.post_date));
+      const doneToday = posts.some(x => x.post_date === today);
+      return `
+        <div class="p-card" data-id="${escapeHtml(p.id)}">
+          <button class="hide-btn" data-hide-type="participant" data-hide-id="${escapeHtml(p.id)}" title="숨기기">🚫</button>
+          <button class="p-card-click" data-open="${escapeHtml(p.id)}">
+            <div class="p-head">
+              <div class="avatar">${escapeHtml(initials(p.name))}</div>
+              <div>
+                <h3 class="p-name">${escapeHtml(p.name)} ${doneToday ? '<span class="today-badge">오늘 완료</span>' : (done ? '<span class="today-badge">🎉 완주</span>' : '')}</h3>
+                <p class="p-insta">@${escapeHtml(p.instagram)}</p>
+              </div>
+            </div>
+            <div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><span class="progress-pct">${pct}%</span></div>
+            <div class="streak-row"><span>🔥 연속 ${streak}일</span><span>${new Set(posts.map(x=>x.post_date)).size} / ${CHALLENGE_DAYS}일</span></div>
+          </button>
+        </div>
+      `;
+    }).join('');
+    list.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => openDetail(el.dataset.open)));
+    wireHideButtons(list);
+  }
+
+  function openDetail(id) {
+    const p = participants.find(x => x.id === id);
+    if (!p) return;
+    activeParticipantId = id;
+    const start = new Date(p.start_date + 'T00:00:00');
+    calYear = start.getFullYear(); calMonth = start.getMonth();
+    const today = new Date();
+    if (today.getFullYear() > calYear || (today.getFullYear() === calYear && today.getMonth() > calMonth)) {
+      calYear = today.getFullYear(); calMonth = today.getMonth();
+    }
+    renderDetail();
+    showScreen('detailScreen');
+    window.scrollTo(0, 0);
+  }
+
+  function renderDetail() {
+    const p = participants.find(x => x.id === activeParticipantId);
+    if (!p) return;
+    const posts = postsByParticipant[p.id] || [];
+    const { count, pct, done } = progressInfo(posts);
+    const streak = computeStreak(posts.map(x => x.post_date));
+
+    document.getElementById('detailAvatar').textContent = initials(p.name);
+    document.getElementById('detailName').textContent = p.name;
+    const insta = document.getElementById('detailInsta');
+    insta.href = `https://www.instagram.com/${encodeURIComponent(p.instagram)}/`;
+    insta.textContent = `@${p.instagram}`;
+    document.getElementById('detailProgressFill').style.width = `${pct}%`;
+    document.getElementById('detailProgressPct').textContent = `${pct}%`;
+    document.getElementById('detailStreakLabel').textContent = `🔥 연속 ${streak}일`;
+    document.getElementById('detailDayLabel').textContent = `${count} / ${CHALLENGE_DAYS}일`;
+
+    const banner = document.getElementById('completeBanner');
+    if (done) {
+      const reelCount = posts.filter(x => x.post_type === 'reel').length;
+      const postCount = posts.filter(x => x.post_type === 'post').length;
+      const longest = longestStreak(posts.map(x => x.post_date));
+      banner.innerHTML = `
+        <div class="complete-banner">
+          <h3>🎉 30일 챌린지 완주!</h3>
+          <p>릴스 ${reelCount}개 · 게시글 ${postCount}개</p>
+          <p>최장 연속 기록 ${longest}일</p>
+        </div>
+      `;
+    } else {
+      banner.innerHTML = '';
+    }
+
+    renderCalendar();
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+  }
+  document.getElementById('backBtn').addEventListener('click', () => showScreen('listScreen'));
+
+  function renderCalendar() {
+    const p = participants.find(x => x.id === activeParticipantId);
+    const posts = postsByParticipant[p.id] || [];
+    const postByDate = {};
+    posts.forEach(x => { postByDate[x.post_date] = x; });
+
+    document.getElementById('monthLabel').textContent = `${calYear}년 ${calMonth + 1}월`;
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const todayStr = todayLocalDate();
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < firstDay; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'day-cell-empty';
+      frag.appendChild(empty);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const key = `${calYear}-${pad2(calMonth + 1)}-${pad2(d)}`;
+      const post = postByDate[key];
+      const cell = document.createElement('button');
+      cell.className = 'day-cell' + (key === todayStr ? ' today' : '') + (post ? ' has-post' : '');
+      cell.innerHTML = post
+        ? `<span class="post-icon">${post.post_type === 'reel' ? '🎬' : '🖼️'}</span>`
+        : `<span>${d}</span>`;
+      cell.addEventListener('click', () => post ? openDayDetail(key, post) : openCheckin(key));
+      frag.appendChild(cell);
+    }
+    grid.appendChild(frag);
+  }
+
+  document.getElementById('prevMonthBtn').addEventListener('click', () => {
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  });
+  document.getElementById('nextMonthBtn').addEventListener('click', () => {
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  });
+
+  /* ---------- Modals ---------- */
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.close)));
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('open'); });
+  });
+
+  /* ---------- Join ---------- */
+  document.getElementById('joinBtn').addEventListener('click', () => {
+    document.getElementById('joinMsg').textContent = '';
+    document.getElementById('joinName').value = '';
+    document.getElementById('joinInsta').value = '';
+    document.getElementById('joinPin').value = '';
+    openModal('joinModal');
+  });
+  document.getElementById('joinSubmitBtn').addEventListener('click', async () => {
+    const msg = document.getElementById('joinMsg');
+    const name = document.getElementById('joinName').value.trim();
+    const insta = document.getElementById('joinInsta').value.trim().replace(/^@/, '');
+    const pin = document.getElementById('joinPin').value.trim();
+    if (!name) { msg.textContent = '이름을 입력해주세요.'; msg.className = 'form-msg error'; return; }
+    if (!insta) { msg.textContent = '인스타그램 아이디를 입력해주세요.'; msg.className = 'form-msg error'; return; }
+    if (!/^\d{4}$/.test(pin)) { msg.textContent = '비밀번호는 4자리 숫자로 입력해주세요.'; msg.className = 'form-msg error'; return; }
+    msg.textContent = '등록 중...'; msg.className = 'form-msg';
+    try {
+      const id = await sbRpc('insta_join', { p_name: name, p_instagram: insta, p_pin: pin });
+      msg.textContent = '참가 완료!'; msg.className = 'form-msg success';
+      await init();
+      setTimeout(() => { closeModal('joinModal'); openDetail(id); }, 700);
+    } catch (err) {
+      msg.textContent = err.message || '등록 중 문제가 생겼어요.'; msg.className = 'form-msg error';
+    }
+  });
+
+  /* ---------- Check-in ---------- */
+  let checkinDateKey = null;
+  function openCheckin(dateKey) {
+    checkinDateKey = dateKey || todayLocalDate();
+    document.getElementById('checkinTitle').textContent = checkinDateKey === todayLocalDate() ? '오늘 인증하기' : `${checkinDateKey} 기록하기`;
+    document.getElementById('checkinDate').value = checkinDateKey;
+    document.getElementById('checkinUrl').value = '';
+    document.getElementById('checkinPin').value = '';
+    document.getElementById('checkinMsg').textContent = '';
+    openModal('checkinModal');
+  }
+  document.getElementById('checkinBtn').addEventListener('click', () => openCheckin(todayLocalDate()));
+  document.getElementById('checkinDate').addEventListener('change', (e) => { checkinDateKey = e.target.value; });
+
+  document.getElementById('checkinSubmitBtn').addEventListener('click', async () => {
+    const msg = document.getElementById('checkinMsg');
+    const url = document.getElementById('checkinUrl').value.trim();
+    const pin = document.getElementById('checkinPin').value.trim();
+    const date = document.getElementById('checkinDate').value || checkinDateKey;
+    if (!/^\d{4}$/.test(pin)) { msg.textContent = '비밀번호는 4자리 숫자예요.'; msg.className = 'form-msg error'; return; }
+    const parsed = parseInstagramUrl(url);
+    if (parsed.error) { msg.textContent = parsed.error; msg.className = 'form-msg error'; return; }
+    msg.textContent = '기록 중...'; msg.className = 'form-msg';
+    try {
+      const result = await sbRpc('insta_add_post', { p_participant_id: activeParticipantId, p_pin: pin, p_post_date: date, p_url: url });
+      msg.textContent = '기록했어요!'; msg.className = 'form-msg success';
+      await init();
+      renderDetail();
+      setTimeout(() => {
+        closeModal('checkinModal');
+        if (result.just_completed) showCompletionCelebration();
+      }, 700);
+    } catch (err) {
+      msg.textContent = err.message || '기록 중 문제가 생겼어요.'; msg.className = 'form-msg error';
+    }
+  });
+
+  function showCompletionCelebration() {
+    alert('🎉 30일 챌린지를 완주했어요! 축하해요!');
+  }
+
+  /* ---------- Day detail (embed) ---------- */
+  function openDayDetail(dateKey, post) {
+    document.getElementById('dayModalTitle').textContent = dateKey;
+    document.getElementById('dayModalBody').innerHTML = `
+      <span class="post-type-badge ${post.post_type}">${post.post_type === 'reel' ? '릴스' : '게시글'}</span>
+      <div class="embed-wrap">
+        <blockquote class="instagram-media" data-instgrm-permalink="${escapeHtml(post.url)}" data-instgrm-version="14" style="max-width:480px;min-width:270px;width:100%;"></blockquote>
+      </div>
+      <a class="btn btn-outline" href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer">인스타그램에서 보기 →</a>
+      <button class="btn btn-secondary" data-hide-type="post" data-hide-id="${escapeHtml(post.id)}" style="width:100%;margin-top:8px;">🚫 이 기록 숨기기</button>
+    `;
+    wireHideButtons(document.getElementById('dayModalBody'));
+    openModal('dayModal');
+    processEmbeds();
+  }
+
+  /* ---------- Share card ---------- */
+  document.getElementById('shareBtn').addEventListener('click', () => {
+    const p = participants.find(x => x.id === activeParticipantId);
+    const posts = postsByParticipant[p.id] || [];
+    const { count } = progressInfo(posts);
+    const streak = computeStreak(posts.map(x => x.post_date));
+    const dataUrl = generateShareCard(p.name, count, streak);
+    document.getElementById('shareCardImg').src = dataUrl;
+    document.getElementById('shareDownloadBtn').href = dataUrl;
+    document.getElementById('shareDownloadBtn').download = `challenge-day${count}.png`;
+    openModal('shareModal');
+  });
+
+  function generateShareCard(name, dayCount, streak) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+    const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+    grad.addColorStop(0, '#f58529');
+    grad.addColorStop(0.5, '#dd2a7b');
+    grad.addColorStop(1, '#8134af');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.16)';
+    ctx.fillRect(80, 80, 920, 920);
+
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 64px sans-serif';
+    ctx.fillText('인스타그램 30일 챌린지', 540, 340);
+    ctx.font = 'bold 120px sans-serif';
+    ctx.fillText(`${dayCount}일차 달성!`, 540, 540);
+    ctx.font = 'bold 52px sans-serif';
+    ctx.fillText(escapeForCanvas(name), 540, 660);
+    ctx.font = '44px sans-serif';
+    ctx.fillText(`🔥 연속 ${streak}일`, 540, 760);
+    return canvas.toDataURL('image/png');
+  }
+  function escapeForCanvas(s) { return String(s || ''); }
+
+  /* ---------- Admin hide ---------- */
+  function wireHideButtons(root) {
+    root.querySelectorAll('[data-hide-type]').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const type = btn.dataset.hideType;
+        const id = btn.dataset.hideId;
+        const adminPin = prompt('관리자 비밀번호를 입력하세요');
+        if (!adminPin) return;
+        try {
+          await sbRpc('insta_admin_set_hidden', { p_admin_pin: adminPin, p_target_table: type, p_target_id: id, p_hidden: true });
+          alert('숨겼어요.');
+          closeModal('dayModal');
+          await init();
+          if (activeParticipantId) renderDetail();
+        } catch (err) {
+          alert(err.message || '실패했어요.');
+        }
+      });
+    });
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
