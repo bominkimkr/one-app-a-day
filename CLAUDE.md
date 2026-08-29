@@ -28,7 +28,7 @@ Open the relevant day's `index.html` directly in a browser — e.g. on Windows: 
 ## Gallery site
 
 - Hosted via GitHub Pages from the `main` branch root. Pushing to `main` is enough to update the live site — no build step.
-- Backed by the Supabase project **insta-challenge** (project ref `yapenvwinwwqjmrysxiu`), tables prefixed `gallery_` (`gallery_participants`, `gallery_apps`, `gallery_admin`, plus `gallery_participants_public` / `gallery_apps_public` views and `gallery_join` / `gallery_add_app` / `gallery_admin_set_hidden` RPC functions). The same Supabase project also hosts the separate `day03-insta-challenge` app's own tables — don't cross-reference or rename either app's tables without checking both.
+- Backed by the Supabase project **insta-challenge** (project ref `yapenvwinwwqjmrysxiu`), tables prefixed `gallery_` (`gallery_participants`, `gallery_apps`, `gallery_admin`, plus `gallery_participants_public` / `gallery_apps_public` views and `gallery_join` / `gallery_add_app` / `gallery_admin_set_hidden` RPC functions). The same Supabase project also hosts the separate `day02-insta-challenge` app's own tables (`insta_` prefix) — don't cross-reference or rename either app's tables without checking both.
 - The publishable (anon-equivalent) Supabase key is embedded directly in `index.html` — this is expected and safe for this key type (RLS + SECURITY DEFINER functions are what actually enforce access, not key secrecy).
 - Participants join and upload their own apps directly from the site (no JSON file to hand-edit). A 4-digit PIN set at signup gates who can add apps under a given participant.
 - Hiding an inappropriate participant/app requires the separate admin PIN (stored hashed in `gallery_admin`) via the 🚫 button on any card.
