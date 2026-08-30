@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>시험 계획표</title>
+<style>
+  :root {
+    --bg: #f6f5fb;
+    --surface: #ffffff;
+    --text: #292640;
+    --text-muted: #837f9c;
+    --accent: #7452e0;
+    --accent-soft: #ece6fb;
+    --border: #e6e2f2;
+    --danger: #c0392b;
+    --exam-bg: #ffe8e0;
+    --exam-text: #b8452a;
+    --shadow: 0 2px 10px rgba(50, 40, 90, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #181622;
+      --surface: #22202e;
+      --text: #ece9f7;
+      --text-muted: #9a96b3;
+      --accent: #a184f0;
+      --accent-soft: #2c2740;
+      --border: #302c42;
+      --danger: #e57373;
+      --exam-bg: #402a24;
+      --exam-text: #f0a48f;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    font-size: 16.5px; line-height: 1.5;
+  }
+  button { font-family: inherit; }
+  #app { max-width: 560px; margin: 0 auto; min-height: 100vh; padding-bottom: 92px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 16px 6px; }
+  .topbar h1 { margin: 0; font-size: 18px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .icon-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 16px; cursor: pointer; flex-shrink: 0; }
+  main { padding: 0 16px 24px; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .dday-card { background: linear-gradient(135deg, var(--accent), #9b7bf0); color: #fff; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 16px; }
+  .dday-card .big { font-size: 34px; font-weight: 800; }
+  .dday-card .sub { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+
+  .subject-chip-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; }
+  .subject-chip { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-title { font-size: 14.5px; font-weight: 800; margin: 18px 0 10px; }
+  .task-card { background: var(--surface); border: 2px solid var(--border); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .task-card.done { border-color: var(--accent); background: var(--accent-soft); }
+  .task-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .task-card.done .task-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .task-info { flex: 1; min-width: 0; }
+  .task-subject { font-size: 11px; font-weight: 800; color: var(--accent); }
+  .task-text { font-size: 14.5px; font-weight: 600; }
+  .task-overdue-badge { font-size: 10.5px; background: var(--exam-bg); color: var(--exam-text); padding: 2px 7px; border-radius: 999px; font-weight: 800; flex-shrink: 0; }
+  .move-btn { background: none; border: 1px solid var(--border); border-radius: 8px; font-size: 11.5px; padding: 5px 8px; color: var(--text-muted); cursor: pointer; flex-shrink: 0; }
+  .empty-hint { color: var(--text-muted); text-align: center; padding: 24px 16px; font-size: 13.5px; }
+
+  .btn { border: none; border-radius: 12px; padding: 13px 16px; font-size: 15px; font-weight: 800; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: #fff; width: 100%; }
+  .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--border); width: 100%; }
+  .action-row { display: flex; gap: 8px; margin: 16px 0; }
+  .action-row .btn { flex: 1; }
+
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 11px 13px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 15px; font-family: inherit;
+  }
+  .danger-link { display: block; text-align: center; color: var(--danger); font-size: 13.5px; margin-top: 12px; background: none; border: none; cursor: pointer; padding: 6px; width: 100%; }
+
+  .subject-row, .examdate-row { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; }
+  .subject-row .name { flex: 1; font-weight: 700; font-size: 14px; }
+  .small-btn { background: none; border: 1px solid var(--border); border-radius: 8px; font-size: 11.5px; padding: 5px 8px; color: var(--text); cursor: pointer; }
+  .img-thumb-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .img-thumb { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border); }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(20, 15, 30, 0.5); z-index: 50; align-items: flex-end; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg); width: 100%; max-width: 560px; max-height: 88vh; border-radius: 20px 20px 0 0; overflow-y: auto; animation: slideUp 0.2s ease; }
+  @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-header { position: sticky; top: 0; background: var(--bg); display: flex; align-items: center; justify-content: space-between; padding: 18px 18px 10px; border-bottom: 1px solid var(--border); z-index: 2; }
+  .modal-header h3 { margin: 0; font-size: 18px; }
+  .close-btn { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; width: 40px; height: 40px; }
+  .modal-body { padding: 16px 18px 28px; }
+
+  .tabbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 560px; display: flex; background: var(--surface); border-top: 1px solid var(--border); padding: 6px 0 max(6px, env(safe-area-inset-bottom)); }
+  .tab-btn { flex: 1; background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; padding: 8px 0; cursor: pointer; }
+  .tab-btn.active { color: var(--accent); font-weight: 700; }
+  .tab-btn .icon { font-size: 20px; }
+
+  .week-block { background: var(--surface); border-radius: 16px; padding: 14px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .week-block.exam-week { border: 2px solid var(--accent); }
+  .week-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .week-header h4 { margin: 0; font-size: 15.5px; font-weight: 800; }
+  .week-progress { font-size: 12px; color: var(--accent); font-weight: 800; }
+  .week-quote { font-size: 12px; color: var(--text-muted); font-style: italic; margin: 0 0 12px; }
+  .day-block { border-top: 1px solid var(--border); padding: 10px 0; }
+  .day-block:first-of-type { border-top: none; }
+  .day-block.is-exam-date { background: var(--exam-bg); border-radius: 10px; padding: 10px; margin: 4px 0; }
+  .day-date-label { font-size: 12.5px; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .exam-tag { font-size: 10.5px; background: var(--exam-text); color: #fff; padding: 2px 7px; border-radius: 999px; }
+  .subject-task-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .subject-task-row input[type="text"] { flex: 1; padding: 7px 9px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 13px; }
+  .subject-task-row .task-check-mini { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .subject-task-row .task-check-mini.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .share-card-img { width: 100%; border-radius: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <h1 id="pageTitle">시험 계획표</h1>
+    <button class="icon-btn" id="menuBtn" title="메뉴">⚙️</button>
+  </div>
+  <main>
+    <section id="todayScreen" class="screen active">
+      <div class="dday-card">
+        <div class="big" id="ddayBig">D-0</div>
+        <div class="sub" id="ddaySub"></div>
+      </div>
+
+      <div class="subject-chip-row" id="subjectChipRow"></div>
+
+      <p class="section-title">오늘 할 일</p>
+      <div id="todayTaskList"></div>
+
+      <div id="overdueSection"></div>
+
+      <div class="action-row">
+        <button class="btn btn-outline" id="shareTodayBtn">이미지 저장</button>
+      </div>
+    </section>
+
+    <section id="planScreen" class="screen">
+      <div id="weekBlocks"></div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab-btn active" data-screen="todayScreen"><span class="icon">📌</span><span>오늘</span></button>
+    <button class="tab-btn" data-screen="planScreen"><span class="icon">🗓️</span><span>전체 계획표</span></button>
+  </nav>
+</div>
+
+<div id="nameModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>반가워요 ✏️</h3></div>
+    <div class="modal-body">
+      <div class="field"><label>이름을 알려주세요</label><input type="text" id="nameInput" placeholder="이름 또는 닉네임" maxlength="12"></div>
+      <button class="btn btn-primary" id="nameSubmitBtn">시작하기</button>
+    </div>
+  </div>
+</div>
+
+<div id="setupModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>시험 등록</h3><button class="close-btn" id="setupCloseBtn" data-close="setupModal">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>시험 이름</label><input type="text" id="examNameInput" placeholder="예: 2학기 중간고사"></div>
+
+      <p class="section-title">과목 등록</p>
+      <div id="subjectListWrap"></div>
+      <div class="field"><input type="text" id="newSubjectInput" placeholder="과목명 입력 (예: 수학)"></div>
+      <button class="btn btn-outline" id="addSubjectBtn" style="margin-bottom:18px;">＋ 과목 추가</button>
+
+      <p class="section-title">시험 날짜 등록</p>
+      <div id="examDateListWrap"></div>
+      <div class="field"><label>날짜</label><input type="date" id="newExamDate"></div>
+      <div class="field"><label>과목</label><select id="newExamDateSubject"></select></div>
+      <button class="btn btn-outline" id="addExamDateBtn" style="margin-bottom:18px;">＋ 시험 날짜 추가</button>
+
+      <p class="empty-hint" id="setupMsg" style="display:none;padding:8px;"></p>
+      <button class="btn btn-primary" id="setupSaveBtn">계획표 만들기</button>
+    </div>
+  </div>
+</div>
+
+<div id="subjectRangeModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3 id="rangeModalTitle">시험 범위</h3><button class="close-btn" data-close="subjectRangeModal">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>범위 (텍스트)</label><textarea id="rangeTextInput" rows="4" placeholder="예: 1~3단원, 교과서 p.10~55"></textarea></div>
+      <button class="btn btn-outline" id="saveRangeTextBtn" style="margin-bottom:14px;">범위 텍스트 저장</button>
+      <div class="field"><label>범위 사진 (여러 장 가능)</label><input type="file" id="rangeImageInput" accept="image/*" multiple></div>
+      <div class="img-thumb-row" id="rangeImageThumbs"></div>
+    </div>
+  </div>
+</div>
+
+<div id="menuModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>메뉴</h3><button class="close-btn" data-close="menuModal">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>이름</label><input type="text" id="settingsNameInput"></div>
+      <button class="btn btn-outline" id="settingsSaveNameBtn" style="margin-bottom:18px;">이름 저장</button>
+      <button class="btn btn-outline" id="markCompleteBtn" style="margin-bottom:10px;">✅ 이 시험 완료 처리하기</button>
+      <button class="btn btn-primary" id="newExamBtn">＋ 새 시험 등록하기</button>
+    </div>
+  </div>
+</div>
+
+<div id="moveModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>다른 날로 옮기기</h3><button class="close-btn" data-close="moveModal">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>옮길 날짜</label><input type="date" id="moveTargetDate"></div>
+      <button class="btn btn-primary" id="moveConfirmBtn">옮기기</button>
+    </div>
+  </div>
+</div>
+
+<div id="shareModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header"><h3>오늘의 계획 카드</h3><button class="close-btn" data-close="shareModal">✕</button></div>
+    <div class="modal-body">
+      <img class="share-card-img" id="shareCardImg" alt="계획 카드 미리보기">
+      <a class="btn btn-primary" id="shareCardDownloadBtn" download="exam-planner.png" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box;">이미지 저장하기</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEYS = { username: 'ep_username', exams: 'ep_exams', activeId: 'ep_active_exam_id' };
+  var WEEKDAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
+  var COLOR_PALETTE = ['#7452e0','#e0693f','#3fa0e0','#e0428f','#3fb37a','#c9932e','#8f6be0','#e05252','#2ea3a3','#a3892e'];
+  var QUOTES = [
+    '노력은 배신하지 않는다.',
+    '오늘 흘린 땀이 내일의 자신감이 된다.',
+    '작은 반복이 큰 실력을 만든다.',
+    '포기하지 않는 한 늦은 때는 없다.',
+    '한 문제 더 푸는 것이 합격을 가른다.',
+    '지금의 노력은 미래의 나에게 주는 선물이다.',
+    '꾸준함이 재능을 이긴다.',
+    '어제보다 한 뼘 더 성장한 오늘.',
+    '시작이 반이다, 계획대로 하나씩.',
+    '실수는 배움의 다른 이름이다.'
+  ];
+
+  var state = { exams: [], activeId: null, editingSubjectId: null, moveContext: null };
+
+  function loadState() {
+    try { state.exams = JSON.parse(localStorage.getItem(STORAGE_KEYS.exams) || '[]'); } catch (e) { state.exams = []; }
+    state.activeId = localStorage.getItem(STORAGE_KEYS.activeId) || null;
+  }
+  function saveExams() { localStorage.setItem(STORAGE_KEYS.exams, JSON.stringify(state.exams)); }
+  function saveActiveId() { localStorage.setItem(STORAGE_KEYS.activeId, state.activeId || ''); }
+  function getUsername() { return localStorage.getItem(STORAGE_KEYS.username) || ''; }
+  function setUsername(n) { localStorage.setItem(STORAGE_KEYS.username, n); }
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function dateKeyFromDate(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  function todayKey() { return dateKeyFromDate(new Date()); }
+  function addDaysStr(key, delta) { var d = new Date(key + 'T00:00:00'); d.setDate(d.getDate() + delta); return dateKeyFromDate(d); }
+  function daysBetween(a, b) { return Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000); }
+  function formatShort(key) { var d = new Date(key + 'T00:00:00'); return (d.getMonth() + 1) + '/' + d.getDate() + ' (' + WEEKDAY_NAMES[d.getDay()] + ')'; }
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function generateId(p) { return p + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8); }
+  function hashStr(s) { var h = 0; for (var i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) >>> 0; } return h; }
+
+  function getActiveExam() { return state.exams.filter(function (e) { return e.id === state.activeId; })[0] || null; }
+  function examFirstDate(exam) { return exam.examDates.map(function (d) { return d.date; }).sort()[0]; }
+  function examLastDate(exam) { return exam.examDates.map(function (d) { return d.date; }).sort().slice(-1)[0]; }
+  function subjectById(exam, id) { return exam.subjects.filter(function (s) { return s.id === id; })[0]; }
+  function examSubjectsOnDate(exam, dateKey) { return exam.examDates.filter(function (d) { return d.date === dateKey; }).map(function (d) { return d.subjectId; }); }
+  function getTask(exam, dateKey, subjectId) {
+    return (exam.tasks[dateKey] && exam.tasks[dateKey][subjectId]) || null;
+  }
+  function setTask(exam, dateKey, subjectId, text, done) {
+    if (!exam.tasks[dateKey]) exam.tasks[dateKey] = {};
+    if (!text) { delete exam.tasks[dateKey][subjectId]; }
+    else { exam.tasks[dateKey][subjectId] = { text: text, done: !!done }; }
+    saveExams();
+  }
+
+  // ---------- Onboarding ----------
+  function ensureUsername() { if (!getUsername()) openModal('nameModal'); }
+  function updatePageTitle() {
+    var exam = getActiveExam();
+    document.getElementById('pageTitle').textContent = exam ? exam.name : ((getUsername() || '나') + '의 시험 계획표');
+  }
+  document.getElementById('nameSubmitBtn').addEventListener('click', function () {
+    var v = document.getElementById('nameInput').value.trim();
+    if (!v) { document.getElementById('nameInput').focus(); return; }
+    setUsername(v); closeModal('nameModal'); updatePageTitle();
+    if (!getActiveExam()) openSetupModal();
+  });
+
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { closeModal(b.dataset.close); }); });
+  document.querySelectorAll('.modal-overlay').forEach(function (o) {
+    o.addEventListener('click', function (e) {
+      if (o.id === 'nameModal' || o.id === 'setupModal') return;
+      if (e.target === o) o.classList.remove('open');
+    });
+  });
+
+  document.querySelectorAll('.tab-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.screen').forEach(function (s) { s.classList.toggle('active', s.id === b.dataset.screen); });
+      document.querySelectorAll('.tab-btn').forEach(function (t) { t.classList.toggle('active', t === b); });
+      if (b.dataset.screen === 'planScreen') renderPlan();
+    });
+  });
+
+  // ---------- Setup ----------
+  var draftSubjects = [];
+  var draftExamDates = [];
+  function openSetupModal() {
+    draftSubjects = [];
+    draftExamDates = [];
+    document.getElementById('examNameInput').value = '';
+    renderDraftSubjects();
+    renderDraftExamDates();
+    openModal('setupModal');
+  }
+  function renderDraftSubjects() {
+    var wrap = document.getElementById('subjectListWrap');
+    wrap.innerHTML = draftSubjects.map(function (s) {
+      return '<div class="subject-row"><span class="dot" style="background:' + s.color + ';"></span><span class="name">' + escapeHtml(s.name) + '</span>' +
+        '<button class="small-btn" data-range="' + s.id + '">범위 입력</button>' +
+        '<button class="small-btn" data-remove-subject="' + s.id + '">삭제</button></div>';
+    }).join('');
+    wrap.querySelectorAll('[data-range]').forEach(function (el) { el.addEventListener('click', function () { openRangeModal(el.dataset.range, true); }); });
+    wrap.querySelectorAll('[data-remove-subject]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        draftSubjects = draftSubjects.filter(function (s) { return s.id !== el.dataset.removeSubject; });
+        draftExamDates = draftExamDates.filter(function (d) { return d.subjectId !== el.dataset.removeSubject; });
+        renderDraftSubjects(); renderDraftExamDates(); populateSubjectSelect();
+      });
+    });
+    populateSubjectSelect();
+  }
+  function populateSubjectSelect() {
+    var sel = document.getElementById('newExamDateSubject');
+    sel.innerHTML = draftSubjects.map(function (s) { return '<option value="' + s.id + '">' + escapeHtml(s.name) + '</option>'; }).join('');
+  }
+  function renderDraftExamDates() {
+    var wrap = document.getElementById('examDateListWrap');
+    if (!draftExamDates.length) { wrap.innerHTML = ''; return; }
+    wrap.innerHTML = draftExamDates.map(function (d, i) {
+      var s = draftSubjects.filter(function (x) { return x.id === d.subjectId; })[0];
+      return '<div class="examdate-row"><span class="name">' + formatShort(d.date) + ' — ' + (s ? escapeHtml(s.name) : '') + '</span>' +
+        '<button class="small-btn" data-remove-date="' + i + '">삭제</button></div>';
+    }).join('');
+    wrap.querySelectorAll('[data-remove-date]').forEach(function (el) {
+      el.addEventListener('click', function () { draftExamDates.splice(parseInt(el.dataset.removeDate, 10), 1); renderDraftExamDates(); });
+    });
+  }
+  document.getElementById('addSubjectBtn').addEventListener('click', function () {
+    var name = document.getElementById('newSubjectInput').value.trim();
+    if (!name) return;
+    draftSubjects.push({ id: generateId('subj'), name: name, color: COLOR_PALETTE[draftSubjects.length % COLOR_PALETTE.length], rangeText: '', rangeImages: [] });
+    document.getElementById('newSubjectInput').value = '';
+    renderDraftSubjects();
+  });
+  document.getElementById('addExamDateBtn').addEventListener('click', function () {
+    var date = document.getElementById('newExamDate').value;
+    var subjectId = document.getElementById('newExamDateSubject').value;
+    if (!date || !subjectId) { return; }
+    draftExamDates.push({ date: date, subjectId: subjectId });
+    renderDraftExamDates();
+  });
+  document.getElementById('setupSaveBtn').addEventListener('click', function () {
+    var name = document.getElementById('examNameInput').value.trim();
+    if (!name) { document.getElementById('examNameInput').focus(); return; }
+    var msg = document.getElementById('setupMsg');
+    if (!draftSubjects.length) { msg.textContent = '과목을 하나 이상 등록해주세요.'; msg.style.display = 'block'; return; }
+    if (!draftExamDates.length) { msg.textContent = '시험 날짜를 하나 이상 등록해주세요.'; msg.style.display = 'block'; return; }
+    msg.style.display = 'none';
+    var exam = { id: generateId('exam'), name: name, completed: false, subjects: draftSubjects, examDates: draftExamDates, tasks: {}, createdAt: Date.now(), createdAtDateKey: todayKey() };
+    state.exams.push(exam);
+    state.activeId = exam.id;
+    saveExams(); saveActiveId();
+    closeModal('setupModal');
+    updatePageTitle();
+    renderToday();
+  });
+
+  // ---------- Range modal (also used post-setup for editing) ----------
+  var rangeIsDraft = false;
+  function openRangeModal(subjectId, isDraft) {
+    rangeIsDraft = !!isDraft;
+    state.editingSubjectId = subjectId;
+    var subject = isDraft ? draftSubjects.filter(function (s) { return s.id === subjectId; })[0] : subjectById(getActiveExam(), subjectId);
+    if (!subject) return;
+    document.getElementById('rangeModalTitle').textContent = subject.name + ' 시험 범위';
+    document.getElementById('rangeTextInput').value = subject.rangeText || '';
+    renderRangeImages(subject);
+    openModal('subjectRangeModal');
+  }
+  function renderRangeImages(subject) {
+    document.getElementById('rangeImageThumbs').innerHTML = (subject.rangeImages || []).map(function (src) {
+      return '<img class="img-thumb" src="' + src + '">';
+    }).join('');
+  }
+  document.getElementById('saveRangeTextBtn').addEventListener('click', function () {
+    var subject = rangeIsDraft ? draftSubjects.filter(function (s) { return s.id === state.editingSubjectId; })[0] : subjectById(getActiveExam(), state.editingSubjectId);
+    if (!subject) return;
+    subject.rangeText = document.getElementById('rangeTextInput').value.trim();
+    if (!rangeIsDraft) saveExams();
+    closeModal('subjectRangeModal');
+  });
+  function resizeImageFile(file, maxW) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = new Image();
+        img.onload = function () {
+          var scale = Math.min(1, maxW / img.width);
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.75));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  document.getElementById('rangeImageInput').addEventListener('change', function (e) {
+    var files = Array.from(e.target.files || []);
+    e.target.value = '';
+    var subject = rangeIsDraft ? draftSubjects.filter(function (s) { return s.id === state.editingSubjectId; })[0] : subjectById(getActiveExam(), state.editingSubjectId);
+    if (!subject) return;
+    Promise.all(files.map(function (f) { return resizeImageFile(f, 800); })).then(function (dataUrls) {
+      subject.rangeImages = (subject.rangeImages || []).concat(dataUrls);
+      if (!rangeIsDraft) saveExams();
+      renderRangeImages(subject);
+    });
+  });
+
+  // ---------- Menu ----------
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    document.getElementById('settingsNameInput').value = getUsername();
+    openModal('menuModal');
+  });
+  document.getElementById('settingsSaveNameBtn').addEventListener('click', function () {
+    var v = document.getElementById('settingsNameInput').value.trim();
+    if (v) { setUsername(v); updatePageTitle(); }
+  });
+  document.getElementById('markCompleteBtn').addEventListener('click', function () {
+    var exam = getActiveExam();
+    if (!exam) return;
+    exam.completed = true;
+    saveExams();
+    state.activeId = null;
+    saveActiveId();
+    closeModal('menuModal');
+    updatePageTitle();
+    openSetupModal();
+  });
+  document.getElementById('newExamBtn').addEventListener('click', function () {
+    closeModal('menuModal');
+    openSetupModal();
+  });
+
+  // ---------- Today screen ----------
+  function renderToday() {
+    var exam = getActiveExam();
+    if (!exam) {
+      document.getElementById('ddayBig').textContent = '📋';
+      document.getElementById('ddaySub').textContent = '아직 등록된 시험이 없어요';
+      document.getElementById('subjectChipRow').innerHTML = '';
+      document.getElementById('todayTaskList').innerHTML = '<p class="empty-hint">메뉴에서 시험을 등록해보세요.</p>';
+      document.getElementById('overdueSection').innerHTML = '';
+      return;
+    }
+    var t = todayKey();
+    var first = examFirstDate(exam), last = examLastDate(exam);
+    var examSubjectsToday = examSubjectsOnDate(exam, t);
+    if (examSubjectsToday.length) {
+      document.getElementById('ddayBig').textContent = '오늘 시험!';
+      document.getElementById('ddaySub').textContent = examSubjectsToday.map(function (id) { var s = subjectById(exam, id); return s ? s.name : ''; }).join(', ');
+    } else if (t < first) {
+      document.getElementById('ddayBig').textContent = 'D-' + daysBetween(t, first);
+      document.getElementById('ddaySub').textContent = exam.name + ' 첫날까지';
+    } else if (t > last) {
+      document.getElementById('ddayBig').textContent = '시험 종료';
+      document.getElementById('ddaySub').textContent = '메뉴에서 시험 완료 처리를 해보세요';
+    } else {
+      document.getElementById('ddayBig').textContent = '시험 기간';
+      document.getElementById('ddaySub').textContent = exam.name + ' 진행 중';
+    }
+
+    document.getElementById('subjectChipRow').innerHTML = exam.subjects.map(function (s) {
+      return '<button class="subject-chip" data-chip="' + s.id + '"><span class="dot" style="background:' + s.color + ';"></span>' + escapeHtml(s.name) + '</button>';
+    }).join('');
+    document.getElementById('subjectChipRow').querySelectorAll('[data-chip]').forEach(function (el) {
+      el.addEventListener('click', function () { openRangeModal(el.dataset.chip, false); });
+    });
+
+    var todayTasks = [];
+    exam.subjects.forEach(function (s) {
+      var task = getTask(exam, t, s.id);
+      if (task && task.text) todayTasks.push({ subject: s, task: task });
+    });
+    var list = document.getElementById('todayTaskList');
+    if (!todayTasks.length) {
+      list.innerHTML = '<p class="empty-hint">오늘 할 일이 없어요. 전체 계획표에서 추가해보세요!</p>';
+    } else {
+      list.innerHTML = todayTasks.map(function (item) {
+        return '<div class="task-card' + (item.task.done ? ' done' : '') + '" data-task-subject="' + item.subject.id + '">' +
+          '<span class="task-check">' + (item.task.done ? '✓' : '') + '</span>' +
+          '<div class="task-info"><div class="task-subject" style="color:' + item.subject.color + ';">' + escapeHtml(item.subject.name) + '</div>' +
+          '<div class="task-text">' + escapeHtml(item.task.text) + '</div></div></div>';
+      }).join('');
+      list.querySelectorAll('[data-task-subject]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var sid = el.dataset.taskSubject;
+          var task = getTask(exam, t, sid);
+          setTask(exam, t, sid, task.text, !task.done);
+          renderToday();
+        });
+      });
+    }
+
+    renderOverdue(exam, t);
+  }
+
+  function renderOverdue(exam, t) {
+    var overdue = [];
+    var buckets = generateWeekBuckets(exam);
+    var cursor = buckets[0].start;
+    if (cursor < addDaysStr(t, -28)) cursor = addDaysStr(t, -28);
+    while (cursor < t) {
+      exam.subjects.forEach(function (s) {
+        var task = getTask(exam, cursor, s.id);
+        if (task && task.text && !task.done) overdue.push({ date: cursor, subject: s, task: task });
+      });
+      cursor = addDaysStr(cursor, 1);
+    }
+    var section = document.getElementById('overdueSection');
+    if (!overdue.length) { section.innerHTML = ''; return; }
+    section.innerHTML = '<p class="section-title">밀린 할 일</p>' + overdue.map(function (item) {
+      return '<div class="task-card" data-overdue-date="' + item.date + '" data-overdue-subject="' + item.subject.id + '">' +
+        '<span class="task-overdue-badge">밀림</span>' +
+        '<div class="task-info"><div class="task-subject" style="color:' + item.subject.color + ';">' + escapeHtml(item.subject.name) + ' · ' + formatShort(item.date) + '</div>' +
+        '<div class="task-text">' + escapeHtml(item.task.text) + '</div></div>' +
+        '<button class="move-btn" data-move="' + item.date + '|' + item.subject.id + '">옮기기</button></div>';
+    }).join('');
+    section.querySelectorAll('[data-move]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var parts = el.dataset.move.split('|');
+        state.moveContext = { date: parts[0], subjectId: parts[1] };
+        document.getElementById('moveTargetDate').value = todayKey();
+        openModal('moveModal');
+      });
+    });
+  }
+  document.getElementById('moveConfirmBtn').addEventListener('click', function () {
+    var exam = getActiveExam();
+    var newDate = document.getElementById('moveTargetDate').value;
+    if (!exam || !state.moveContext || !newDate) return;
+    var old = state.moveContext;
+    var task = getTask(exam, old.date, old.subjectId);
+    if (task) {
+      setTask(exam, old.date, old.subjectId, '', false);
+      setTask(exam, newDate, old.subjectId, task.text, false);
+    }
+    closeModal('moveModal');
+    renderToday();
+  });
+
+  // ---------- Plan screen ----------
+  function generateWeekBuckets(exam) {
+    var first = examFirstDate(exam), last = examLastDate(exam);
+    var daysUntil = Math.max(1, daysBetween(exam.createdAtDateKey || todayKey(), first));
+    var weeksAvailable = Math.min(4, Math.max(1, Math.ceil(daysUntil / 7)));
+    var buckets = [];
+    for (var w = weeksAvailable; w >= 1; w--) {
+      buckets.push({ label: w + '주 전', start: addDaysStr(first, -7 * w), end: addDaysStr(first, -7 * (w - 1) - 1) });
+    }
+    buckets.push({ label: '시험주간', start: first, end: last, isExamWeek: true });
+    return buckets;
+  }
+  function renderPlan() {
+    var exam = getActiveExam();
+    var wrap = document.getElementById('weekBlocks');
+    if (!exam) { wrap.innerHTML = '<p class="empty-hint">등록된 시험이 없어요.</p>'; return; }
+    var buckets = generateWeekBuckets(exam);
+    wrap.innerHTML = buckets.map(function (bucket, bi) {
+      var totalTasks = 0, doneTasks = 0;
+      var cur = bucket.start;
+      var daysHtml = '';
+      while (cur <= bucket.end) {
+        var examSubjectsThatDay = examSubjectsOnDate(exam, cur);
+        var rowsHtml = exam.subjects.map(function (s) {
+          var task = getTask(exam, cur, s.id) || { text: '', done: false };
+          if (task.text) { totalTasks++; if (task.done) doneTasks++; }
+          return '<div class="subject-task-row">' +
+            '<span class="task-check-mini' + (task.done ? ' done' : '') + '" data-mini-check="' + cur + '|' + s.id + '">' + (task.done ? '✓' : '') + '</span>' +
+            '<span class="dot" style="background:' + s.color + ';"></span>' +
+            '<input type="text" data-task-input="' + cur + '|' + s.id + '" value="' + escapeHtml(task.text) + '" placeholder="' + escapeHtml(s.name) + ' 할 일">' +
+            '</div>';
+        }).join('');
+        var isExamDate = examSubjectsThatDay.length > 0;
+        daysHtml += '<div class="day-block' + (isExamDate ? ' is-exam-date' : '') + '">' +
+          '<div class="day-date-label">' + formatShort(cur) + (isExamDate ? '<span class="exam-tag">시험일</span>' : '') + '</div>' +
+          rowsHtml + '</div>';
+        cur = addDaysStr(cur, 1);
+      }
+      var pct = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+      var quote = QUOTES[(bi + hashStr(exam.id)) % QUOTES.length];
+      return '<div class="week-block' + (bucket.isExamWeek ? ' exam-week' : '') + '">' +
+        '<div class="week-header"><h4>' + bucket.label + '</h4><span class="week-progress">' + pct + '%</span></div>' +
+        '<p class="week-quote">💬 ' + escapeHtml(quote) + '</p>' +
+        daysHtml + '</div>';
+    }).join('');
+
+    wrap.querySelectorAll('[data-task-input]').forEach(function (el) {
+      el.addEventListener('change', function () {
+        var parts = el.dataset.taskInput.split('|');
+        var existing = getTask(exam, parts[0], parts[1]);
+        setTask(exam, parts[0], parts[1], el.value.trim(), existing ? existing.done : false);
+        renderPlan();
+        renderToday();
+      });
+    });
+    wrap.querySelectorAll('[data-mini-check]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var parts = el.dataset.miniCheck.split('|');
+        var existing = getTask(exam, parts[0], parts[1]);
+        if (!existing || !existing.text) return;
+        setTask(exam, parts[0], parts[1], existing.text, !existing.done);
+        renderPlan();
+        renderToday();
+      });
+    });
+  }
+
+  // ---------- Share card ----------
+  function wrapCanvasText(ctx, text, maxWidth) {
+    var lines = [], current = '';
+    for (var i = 0; i < text.length; i++) {
+      var test = current + text[i];
+      if (ctx.measureText(test).width > maxWidth && current) { lines.push(current); current = text[i]; } else current = test;
+    }
+    if (current) lines.push(current);
+    return lines;
+  }
+  document.getElementById('shareTodayBtn').addEventListener('click', function () {
+    var exam = getActiveExam();
+    if (!exam) return;
+    var t = todayKey();
+    var canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 1920;
+    var ctx = canvas.getContext('2d');
+    var styles = getComputedStyle(document.documentElement);
+    var bg = (styles.getPropertyValue('--bg') || '#f6f5fb').trim();
+    var accent = (styles.getPropertyValue('--accent') || '#7452e0').trim();
+    var text = (styles.getPropertyValue('--text') || '#292640').trim();
+    var textMuted = (styles.getPropertyValue('--text-muted') || '#837f9c').trim();
+
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = accent; ctx.font = 'bold 44px sans-serif';
+    ctx.fillText('📋 ' + exam.name, 540, 150);
+    ctx.fillStyle = textMuted; ctx.font = '32px sans-serif';
+    var first = examFirstDate(exam);
+    var ddayText = t < first ? ('D-' + daysBetween(t, first)) : (examSubjectsOnDate(exam, t).length ? '오늘 시험!' : '시험 기간');
+    ctx.fillText(formatShort(t) + ' · ' + ddayText, 540, 205);
+
+    var tasks = [];
+    exam.subjects.forEach(function (s) { var task = getTask(exam, t, s.id); if (task && task.text) tasks.push({ s: s, task: task }); });
+    var doneCount = tasks.filter(function (x) { return x.task.done; }).length;
+    ctx.fillStyle = text; ctx.font = 'bold 90px sans-serif';
+    ctx.fillText(doneCount + ' / ' + tasks.length, 540, 380);
+    ctx.font = '32px sans-serif'; ctx.fillStyle = textMuted;
+    ctx.fillText('오늘 완료한 할 일', 540, 430);
+
+    var y = 540;
+    ctx.textAlign = 'left';
+    tasks.slice(0, 10).forEach(function (item) {
+      ctx.fillStyle = item.task.done ? item.s.color : '#cccccc';
+      ctx.beginPath(); ctx.arc(120, y - 12, 16, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = text; ctx.font = 'bold 32px sans-serif';
+      var lines = wrapCanvasText(ctx, item.s.name + ' — ' + item.task.text, 780);
+      ctx.fillText(lines[0], 160, y);
+      y += 70;
+    });
+
+    ctx.textAlign = 'center'; ctx.fillStyle = textMuted; ctx.font = '26px sans-serif';
+    ctx.fillText('시험 계획표 · one-app-a-day', 540, 1860);
+
+    var dataUrl = canvas.toDataURL('image/png');
+    document.getElementById('shareCardImg').src = dataUrl;
+    document.getElementById('shareCardDownloadBtn').href = dataUrl;
+    document.getElementById('shareCardDownloadBtn').download = 'exam-planner-' + t + '.png';
+    openModal('shareModal');
+  });
+
+  // ---------- Init ----------
+  loadState();
+  updatePageTitle();
+  renderToday();
+  ensureUsername();
+  if (getUsername() && !getActiveExam()) openSetupModal();
+})();
+</script>
+</body>
+</html>
