@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>대치동 설명회 모아보기</title>
+<style>
+  :root {
+    --bg: #f5f5f4;
+    --card-bg: #ffffff;
+    --text: #1c1c1e;
+    --text-muted: #6b7280;
+    --text-faint: #9ca3af;
+    --accent: #6d5bd0;
+    --accent-soft: #ece8fb;
+    --border: #e5e5e4;
+    --chip-bg: #ffffff;
+    --new: #e11d48;
+    --ok: #15803d;
+    --warn: #b45309;
+    --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 14px rgba(0,0,0,0.045);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181c;
+      --card-bg: #212227;
+      --text: #f2f2f3;
+      --text-muted: #9a9aa2;
+      --text-faint: #71717a;
+      --accent: #a393f5;
+      --accent-soft: #2c2840;
+      --border: #2f3036;
+      --chip-bg: #212227;
+      --new: #fb7185;
+      --ok: #4ade80;
+      --warn: #fbbf24;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.25);
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+                 "Noto Sans KR", "Malgun Gothic", sans-serif;
+    line-height: 1.5;
+    font-size: 15px;
+    padding-bottom: 48px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 28px 0 14px; }
+  header h1 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--text-muted); font-size: 13px; }
+
+  /* ── 수집 현황 ─────────────────────────────────────── */
+  .status {
+    margin: 14px 0 4px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .status summary {
+    list-style: none; cursor: pointer;
+    padding: 11px 14px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .status summary::-webkit-details-marker { display: none; }
+  .status summary .caret { margin-left: auto; color: var(--text-faint); font-size: 11px; }
+  .status[open] summary .caret { transform: rotate(180deg); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .dot.ok { background: var(--ok); }
+  .dot.warn { background: var(--warn); }
+  .status-list { border-top: 1px solid var(--border); padding: 6px 14px 12px; }
+  .status-row {
+    display: flex; align-items: baseline; gap: 8px;
+    padding: 6px 0; font-size: 12.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .status-row:last-child { border-bottom: none; }
+  .status-row .nm { font-weight: 600; min-width: 68px; }
+  .status-row .msg { color: var(--text-muted); margin-left: auto; text-align: right; }
+  .status-row .msg.bad { color: var(--warn); }
+
+  /* ── 필터 ──────────────────────────────────────────── */
+  .sticky {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--bg);
+    padding-top: 10px;
+    margin-top: 6px;
+  }
+  .tabs { display: flex; gap: 6px; }
+  .tabs button {
+    flex: 1; border: 1px solid var(--border); background: var(--chip-bg);
+    color: var(--text-muted); border-radius: 999px;
+    padding: 9px 0; font-size: 14px; font-weight: 700; cursor: pointer;
+    font-family: inherit;
+  }
+  .tabs button[aria-selected="true"] {
+    background: var(--accent); border-color: var(--accent); color: #fff;
+  }
+  .scroller {
+    display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .scroller::-webkit-scrollbar { display: none; }
+  .scroller .chip {
+    flex: none; border: 1px solid var(--border); background: var(--chip-bg);
+    color: var(--text-muted); border-radius: 999px;
+    padding: 6px 13px; font-size: 13px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; font-family: inherit;
+  }
+  .scroller .chip[aria-pressed="true"] { color: #fff; border-color: transparent; }
+  .toolbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0 12px; font-size: 12.5px; color: var(--text-muted);
+  }
+  .toolbar button {
+    margin-left: auto; border: 1px solid var(--border); background: var(--chip-bg);
+    color: var(--text); border-radius: 999px; padding: 6px 12px;
+    font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+
+  /* ── 카드 ──────────────────────────────────────────── */
+  h2.section {
+    margin: 22px 0 10px; font-size: 15px; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 7px;
+  }
+  h2.section .count {
+    font-size: 12px; font-weight: 600; color: var(--text-muted);
+    background: var(--accent-soft); border-radius: 999px; padding: 2px 8px;
+  }
+  .cards { display: flex; flex-direction: column; gap: 10px; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px; box-shadow: var(--shadow);
+  }
+  .card.upcoming { border-left: 3px solid var(--accent); }
+  .card-top { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
+  .label {
+    font-size: 11.5px; font-weight: 800; color: #fff;
+    border-radius: 6px; padding: 3px 8px; letter-spacing: -0.01em;
+  }
+  .tag {
+    font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 6px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .tag.grade { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+  .badge-new {
+    font-size: 10.5px; font-weight: 800; color: #fff; background: var(--new);
+    border-radius: 5px; padding: 3px 6px; letter-spacing: 0.02em;
+  }
+  .card h3 {
+    margin: 0 0 8px; font-size: 15.5px; font-weight: 700;
+    line-height: 1.4; letter-spacing: -0.01em; word-break: keep-all;
+  }
+  .meta { font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 3px; }
+  .meta .when { color: var(--text); font-weight: 600; }
+  .meta .when.past { color: var(--text-faint); font-weight: 500; }
+  .meta .dday { color: var(--accent); font-weight: 700; }
+  .card a.more {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 11px;
+    font-size: 13px; font-weight: 700; text-decoration: none;
+    color: var(--text); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 999px; padding: 8px 14px;
+  }
+  .card a.more:active { background: var(--accent-soft); }
+
+  .empty {
+    text-align: center; color: var(--text-muted); font-size: 14px;
+    padding: 40px 16px; background: var(--card-bg);
+    border: 1px dashed var(--border); border-radius: 14px;
+  }
+  footer {
+    margin-top: 30px; font-size: 11.5px; color: var(--text-faint);
+    line-height: 1.7; word-break: keep-all;
+  }
+  footer a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>대치동 설명회 모아보기</h1>
+    <p id="subtitle">불러오는 중…</p>
+  </header>
+
+  <details class="status" id="status">
+    <summary>
+      <span class="dot ok" id="statusDot"></span>
+      <span id="statusText">수집 현황</span>
+      <span class="caret">▾</span>
+    </summary>
+    <div class="status-list" id="statusList"></div>
+  </details>
+
+  <div class="sticky">
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="scroller" id="academyFilter"></div>
+    <div class="toolbar">
+      <span id="resultCount"></span>
+      <button id="sortBtn" type="button"></button>
+    </div>
+  </div>
+
+  <div id="weekSection" hidden>
+    <h2 class="section">📌 이번 주 설명회 <span class="count" id="weekCount"></span></h2>
+    <div class="cards" id="weekCards"></div>
+  </div>
+
+  <h2 class="section" id="allHeading">전체 목록 <span class="count" id="allCount"></span></h2>
+  <div class="cards" id="allCards"></div>
+  <div class="empty" id="emptyBox" hidden>조건에 맞는 설명회가 없어요.</div>
+
+  <footer>
+    각 학원 공식 홈페이지의 설명회·공지 게시판에서 <strong>제목 · 일정 · 원문 링크</strong>만 모읍니다.
+    자료 전문은 가져오지 않으니 자세한 내용과 신청은 반드시 원문에서 확인하세요.
+    게시판에 등록일이 없는 학원은 이 앱이 글을 <em>처음 발견한 날짜</em>를 등록일 대신 표시합니다(<code>·수집일</code> 표기).
+    <span id="genLine"></span>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var LEVELS = ["전체", "초등", "중등", "고등"];
+  var DAY = 86400000;
+  var state = { level: "전체", academy: null, sort: "recent" };
+  var data = null;
+
+  // ── 날짜 유틸 (모두 한국시간 기준으로 다룬다) ────────────────────
+  function kstToday() {
+    var now = new Date();
+    var kst = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 9 * 3600000);
+    return new Date(kst.getFullYear(), kst.getMonth(), kst.getDate());
+  }
+  var TODAY = kstToday();
+
+  function parseISO(s) {
+    if (!s) return null;
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+    return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+  }
+  function daysFromToday(d) { return d ? Math.round((d - TODAY) / DAY) : null; }
+
+  var WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
+  function fmtDate(d) {
+    return (d.getMonth() + 1) + "월 " + d.getDate() + "일(" + WEEKDAY[d.getDay()] + ")";
+  }
+  function fmtTime(t) {
+    if (!t) return "";
+    var p = t.split(":"), h = +p[0];
+    var ampm = h < 12 ? "오전" : "오후";
+    var h12 = h % 12 === 0 ? 12 : h % 12;
+    return " " + ampm + " " + h12 + (p[1] !== "00" ? ":" + p[1] : "") + "시";
+  }
+  function fmtShort(s) {
+    var d = parseISO(s);
+    if (!d) return "";
+    var diff = daysFromToday(d);
+    if (diff === 0) return "오늘";
+    if (diff === -1) return "어제";
+    return (d.getMonth() + 1) + "/" + d.getDate();
+  }
+  function ddayText(diff) {
+    if (diff === 0) return "오늘";
+    if (diff === 1) return "내일";
+    if (diff > 1) return "D-" + diff;
+    return "";
+  }
+
+  // ── 렌더 ─────────────────────────────────────────────────────
+  function isNew(it) {
+    // 처음 수집한 회차에 딸려 들어온 기존 글에는 NEW 를 붙이지 않는다
+    if (it.bootstrap) return false;
+    var diff = daysFromToday(parseISO(it.posted_at));
+    return diff !== null && diff >= -1;
+  }
+
+  function matches(it) {
+    if (state.academy && it.academy_key !== state.academy) return false;
+    if (state.level === "전체") return true;
+    // 학년 신호가 없는 글(=전체 대상)은 어느 탭에서도 보이게 둔다
+    return !it.levels.length || it.levels.indexOf(state.level) >= 0;
+  }
+
+  function sorted(list) {
+    var copy = list.slice();
+    if (state.sort === "soon") {
+      copy.sort(function (a, b) {
+        var da = parseISO(a.event_date), db = parseISO(b.event_date);
+        var fa = da && da >= TODAY, fb = db && db >= TODAY;
+        if (fa !== fb) return fa ? -1 : 1;           // 다가오는 일정 먼저
+        if (!da && !db) return (b.posted_at || "").localeCompare(a.posted_at || "");
+        if (!da) return 1;
+        if (!db) return -1;
+        return fa ? da - db : db - da;               // 앞날은 가까운 순, 지난 일정은 최근 순
+      });
+    } else {
+      copy.sort(function (a, b) {
+        return (b.posted_at || "").localeCompare(a.posted_at || "")
+            || (b.event_date || "").localeCompare(a.event_date || "");
+      });
+    }
+    return copy;
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function colorOf(key) {
+    var a = data.academies.filter(function (x) { return x.key === key; })[0];
+    return (a && a.color) || "#6b7280";
+  }
+
+  function cardOf(it, opts) {
+    var card = el("article", "card" + (opts && opts.upcoming ? " card upcoming" : ""));
+    card.className = "card" + (opts && opts.upcoming ? " upcoming" : "");
+
+    var top = el("div", "card-top");
+    var label = el("span", "label", it.academy);
+    label.style.background = colorOf(it.academy_key);
+    top.appendChild(label);
+    top.appendChild(el("span", "tag", it.target));
+    // 학년칩이 대상 라벨과 같은 말이면(예: 대상 "초등" + 학년칩 "초등") 굳이 두 번 안 보여준다
+    (it.grades || []).forEach(function (g) {
+      if (it.target.indexOf(g) < 0) top.appendChild(el("span", "tag grade", g));
+    });
+    if (isNew(it)) top.appendChild(el("span", "badge-new", "NEW"));
+    card.appendChild(top);
+
+    card.appendChild(el("h3", null, it.title));
+
+    var meta = el("div", "meta");
+    var ev = parseISO(it.event_date);
+    if (ev) {
+      var diff = daysFromToday(ev);
+      var line = el("div", "when" + (diff < 0 ? " past" : ""));
+      line.textContent = "🗓 " + fmtDate(ev) + fmtTime(it.event_time);
+      var dd = ddayText(diff);
+      if (dd) {
+        var s = el("span", "dday", "  " + dd);
+        line.appendChild(s);
+      }
+      meta.appendChild(line);
+    } else if (it.event_text) {
+      meta.appendChild(el("div", "when", "🗓 " + it.event_text));
+    } else {
+      meta.appendChild(el("div", "when past", "🗓 일정 미정 — 원문 확인"));
+    }
+    if (it.place) meta.appendChild(el("div", null, "📍 " + it.place));
+    meta.appendChild(el("div", null,
+      "등록 " + fmtShort(it.posted_at) + (it.posted_is_estimated ? " · 수집일" : "")));
+    card.appendChild(meta);
+
+    var a = el("a", "more", "원문 보기 →");
+    a.href = it.url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    card.appendChild(a);
+    return card;
+  }
+
+  function fill(node, items, opts) {
+    node.textContent = "";
+    items.forEach(function (it) { node.appendChild(cardOf(it, opts)); });
+  }
+
+  function render() {
+    var visible = data.items.filter(matches);
+
+    var week = visible.filter(function (it) {
+      var d = daysFromToday(parseISO(it.event_date));
+      return d !== null && d >= 0 && d <= 7;
+    }).sort(function (a, b) {
+      return (a.event_date + (a.event_time || "")).localeCompare(b.event_date + (b.event_time || ""));
+    });
+
+    document.getElementById("weekSection").hidden = week.length === 0;
+    document.getElementById("weekCount").textContent = week.length + "건";
+    fill(document.getElementById("weekCards"), week, { upcoming: true });
+
+    var rest = sorted(visible);
+    document.getElementById("allCount").textContent = rest.length + "건";
+    fill(document.getElementById("allCards"), rest);
+
+    document.getElementById("emptyBox").hidden = rest.length > 0;
+    document.getElementById("allHeading").hidden = rest.length === 0;
+    document.getElementById("resultCount").textContent =
+      state.level + " · " + rest.length + "건";
+    document.getElementById("sortBtn").textContent =
+      state.sort === "recent" ? "최신순 ▾" : "설명회 임박순 ▾";
+
+    document.querySelectorAll("#tabs button").forEach(function (b) {
+      b.setAttribute("aria-selected", String(b.dataset.level === state.level));
+    });
+    document.querySelectorAll("#academyFilter .chip").forEach(function (b) {
+      var on = (b.dataset.key || null) === state.academy;
+      b.setAttribute("aria-pressed", String(on));
+      b.style.background = on ? (b.dataset.color || "var(--accent)") : "";
+    });
+  }
+
+  function buildControls() {
+    var tabs = document.getElementById("tabs");
+    LEVELS.forEach(function (lv) {
+      var b = el("button", null, lv);
+      b.type = "button";
+      b.dataset.level = lv;
+      b.setAttribute("role", "tab");
+      b.onclick = function () { state.level = lv; render(); };
+      tabs.appendChild(b);
+    });
+
+    var af = document.getElementById("academyFilter");
+    var all = el("button", "chip", "전체 학원");
+    all.type = "button";
+    all.onclick = function () { state.academy = null; render(); };
+    af.appendChild(all);
+
+    data.academies.forEach(function (a) {
+      var n = data.items.filter(function (i) { return i.academy_key === a.key; }).length;
+      var b = el("button", "chip", a.name + " " + n);
+      b.type = "button";
+      b.dataset.key = a.key;
+      b.dataset.color = a.color;
+      b.onclick = function () {
+        state.academy = state.academy === a.key ? null : a.key;
+        render();
+      };
+      af.appendChild(b);
+    });
+
+    document.getElementById("sortBtn").onclick = function () {
+      state.sort = state.sort === "recent" ? "soon" : "recent";
+      render();
+    };
+  }
+
+  function buildStatus() {
+    var oks = data.academies.filter(function (a) { return a.status === "ok"; }).length;
+    var bad = data.academies.filter(function (a) { return a.status === "fail"; });
+    document.getElementById("statusText").textContent =
+      "학원 " + data.academies.length + "곳 중 " + oks + "곳에서 수집 성공" +
+      (bad.length ? " · " + bad.length + "곳 실패" : "");
+    document.getElementById("statusDot").className = "dot " + (bad.length ? "warn" : "ok");
+
+    var list = document.getElementById("statusList");
+    data.academies.forEach(function (a) {
+      var row = el("div", "status-row");
+      var nm = el("span", "nm", a.name);
+      nm.style.color = a.color;
+      row.appendChild(nm);
+      var msg;
+      if (a.status === "fail") {
+        msg = "수집 실패 · 마지막 성공 " + (fmtShort(a.last_success_at) || "없음");
+      } else if (a.status === "empty") {
+        msg = "게시판에 진행 중인 설명회 없음";
+      } else {
+        msg = a.count + "건 · " + (fmtShort(a.last_success_at) || "-") + " 수집";
+      }
+      var m = el("span", "msg" + (a.status === "fail" ? " bad" : ""), msg);
+      row.appendChild(m);
+      list.appendChild(row);
+    });
+  }
+
+  function boot(d) {
+    data = d;
+    data.items = data.items || [];
+    data.academies = data.academies || [];
+    var gen = data.generated_at || "";
+    document.getElementById("subtitle").textContent =
+      "학원 " + data.academies.length + "곳의 설명회 공지를 매일 아침 6시에 모읍니다 · " +
+      (gen ? gen.slice(0, 10).replace(/-/g, ".") + " " + gen.slice(11, 16) + " 기준" : "");
+    document.getElementById("genLine").textContent =
+      gen ? " 마지막 수집: " + gen.replace("T", " ").slice(0, 16) + " (KST)" : "";
+    buildStatus();
+    buildControls();
+    render();
+  }
+
+  function fail(msg) {
+    document.getElementById("subtitle").textContent = msg;
+    document.getElementById("status").hidden = true;
+    document.getElementById("emptyBox").hidden = false;
+    document.getElementById("emptyBox").textContent = msg;
+  }
+
+  // data.json 을 먼저 시도하고(가장 최신), file:// 등으로 막히면 data.js 로 넘어간다
+  fetch("data.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(boot)
+    .catch(function () {
+      if (window.__SEMINAR_DATA__) boot(window.__SEMINAR_DATA__);
+      else fail("데이터를 불러오지 못했어요. scrape/collect.py 를 한 번 실행해 주세요.");
+    });
+})();
+</script>
+</body>
+</html>
