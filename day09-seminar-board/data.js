@@ -1,6 +1,6 @@
 // collect.py 가 data.json 과 함께 자동 생성합니다. 직접 고치지 마세요.
 window.__SEMINAR_DATA__ = {
- "generated_at": "2026-09-20T07:35:44+09:00",
+ "generated_at": "2026-09-20T20:50:58+09:00",
  "source_note": "각 학원 공식 홈페이지의 설명회·공지 게시판에서 제목/일정/링크만 수집합니다. 자세한 내용은 원문 링크에서 확인하세요.",
  "academies": [
   {
@@ -8,8 +8,8 @@ window.__SEMINAR_DATA__ = {
    "name": "대찬학원",
    "color": "#c2410c",
    "site": "https://www.daechanedu.com/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 7,
@@ -20,8 +20,8 @@ window.__SEMINAR_DATA__ = {
    "name": "세정학원",
    "color": "#0e7490",
    "site": "https://sejungedu.com/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 2,
@@ -32,8 +32,8 @@ window.__SEMINAR_DATA__ = {
    "name": "MEXX",
    "color": "#1d4ed8",
    "site": "https://mexx.megastudy.net/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 1,
@@ -44,7 +44,7 @@ window.__SEMINAR_DATA__ = {
    "name": "시대인재",
    "color": "#7c3aed",
    "site": "https://www.sdij.com/aca/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
    "last_success_at": "2026-09-19T07:55:57+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -56,8 +56,8 @@ window.__SEMINAR_DATA__ = {
    "name": "윤도영과학",
    "color": "#15803d",
    "site": "https://yoondyedu.com/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 3,
@@ -68,8 +68,8 @@ window.__SEMINAR_DATA__ = {
    "name": "다원교육",
    "color": "#b91c1c",
    "site": "http://dawonedu.com/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -80,8 +80,8 @@ window.__SEMINAR_DATA__ = {
    "name": "KNS",
    "color": "#a16207",
    "site": "https://www.knsedu.co.kr/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 1,
@@ -92,15 +92,406 @@ window.__SEMINAR_DATA__ = {
    "name": "SNT",
    "color": "#be185d",
    "site": "https://www.sntedu.co.kr/",
-   "checked_at": "2026-09-20T07:35:44+09:00",
-   "last_success_at": "2026-09-20T07:35:44+09:00",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
    "error": null
+  },
+  {
+   "key": "saeum",
+   "name": "새움학원",
+   "color": "#65a30d",
+   "site": "https://saeumedu.com/",
+   "checked_at": "2026-09-20T20:50:58+09:00",
+   "last_success_at": "2026-09-20T20:50:58+09:00",
+   "first_success_at": "2026-09-20T20:50:58+09:00",
+   "status": "ok",
+   "count": 17,
+   "error": null
   }
  ],
  "items": [
+  {
+   "id": "saeum:예비고3입시설명회및브릿지수업조기개강안내260927N",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "예비고3 입시설명회 및 브릿지수업 조기개강 안내 (`26.09.27) N",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-09-27",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2",
+    "예비고3"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:이과지망생영재고을위한예비고1설명회26922",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "이과 지망생(영재고)을 위한 예비고1 설명회 ('26.9.22)",
+   "url": "https://saeumedu.com/Seminar04",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-09-22",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "중등"
+   ],
+   "target": "중등",
+   "grades": [
+    "예비고1",
+    "중등"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:연세대수리논술설명회26825",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "연세대 수리논술 설명회 (`26.8.25)",
+   "url": "https://saeumedu.com/Seminar03",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-08-25",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고3"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:고12학기중간고사대비학교별영상설명회2687",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "고1 2학기 중간고사 대비 학교별 영상 설명회 (`26.8.7)",
+   "url": "https://saeumedu.com/Seminar01",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-08-07",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고1"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:고22028현실적인대입전략설명회2673",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "고2 2028 현실적인 대입전략 설명회 ('26.7.3)",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-07-03",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:26년고1설명회안내2669266122661826623",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "26년 고1 설명회 안내 (`26.6.9) (`26.6.12) ('26.6.18) ('26.6.23)",
+   "url": "https://saeumedu.com/Seminar01",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-06-23",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고1"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:예비고1마지막설명회26622",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "예비고1 마지막 설명회 (`26.6.22)",
+   "url": "https://saeumedu.com/Seminar04",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-06-22",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "중등"
+   ],
+   "target": "중등",
+   "grades": [
+    "예비고1",
+    "중등"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:고2입시설명회윤환석아우켈라시대팀장26617",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "고2 입시 설명회 윤환석(아우켈라) 시대팀장 ('26.6.17)",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-06-17",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:고22028대입입시전략및학습방법설명회26612",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "고2 2028 대입 입시전략 및 학습방법 설명회 ('26.6.12)",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-06-12",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:고22028대입입시전형발표에따른전략설명회2655",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "고2 2028 대입 입시전형 발표에 따른 전략 설명회 (`26.5.5)",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-09-20",
+   "event_date": "2026-05-05",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:26년고1수학5월간담회일정",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "26년 고1 수학 5월 간담회 일정",
+   "url": "https://saeumedu.com/Seminar01",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고1"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:26년고1내신설명회일정",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "26년 고1 내신 설명회 일정",
+   "url": "https://saeumedu.com/Seminar01",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고1"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:26년고2내신설명회및간담회일정",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "26년 고2 내신 설명회 및 간담회 일정",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:고36평분석및2027입시전략수립설명회1차682차69",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "고3 6평 분석 및 2027 입시전략 수립 설명회 ▶ 1차(6/8), 2차(6/9)",
+   "url": "https://saeumedu.com/Seminar03",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고3"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:25년고2여름방학학습전략입시설명회",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "25년 고2 여름방학 학습전략 & 입시 설명회",
+   "url": "https://saeumedu.com/Seminar03",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2",
+    "고3"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:숙명졸업선배한테직접듣는숙명2공부법",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "숙명 졸업선배한테 직접 듣는 숙명2 공부법",
+   "url": "https://saeumedu.com/Seminar03",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고3"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:26년중3학과입시설명회1차632차618",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "26년 중3 학과+입시설명회 ▶ 1차(6/3), 2차(6/18)",
+   "url": "https://saeumedu.com/Seminar04",
+   "posted_at": "2026-09-20",
+   "event_date": null,
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "중등"
+   ],
+   "target": "중등",
+   "grades": [
+    "중3",
+    "중등"
+   ],
+   "first_seen": "2026-09-20",
+   "bootstrap": true,
+   "posted_is_estimated": true
+  },
   {
    "id": "yoon:m4jNR3HENj0jYJRousjAy",
    "academy_key": "yoon",
@@ -399,7 +790,7 @@ window.__SEMINAR_DATA__ = {
    "academy_key": "kns",
    "academy": "KNS",
    "title": "[초등관] 2026 초등 여름특강 프로그램 안내",
-   "url": "http://ele.knsedu.co.kr/ele/sub5/01.php?flag=view&aid=&bid=1&cate=0&num=30597&PHPSESSID=897f28e4ba8adea73eadb7f08067204e",
+   "url": "http://ele.knsedu.co.kr/ele/sub5/01.php?flag=view&aid=&bid=1&cate=0&num=30597&PHPSESSID=a762ffb9504cf5fb2fc6be146732f08c",
    "posted_at": "2026-06-11",
    "event_date": null,
    "event_time": null,
