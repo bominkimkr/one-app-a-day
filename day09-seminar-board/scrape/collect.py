@@ -48,6 +48,7 @@ ACADEMIES = [
     {"key": "dawon",   "name": "다원교육",    "color": "#b91c1c", "site": "http://dawonedu.com/"},
     {"key": "kns",     "name": "KNS",        "color": "#a16207", "site": "https://www.knsedu.co.kr/"},
     {"key": "snt",     "name": "SNT",        "color": "#be185d", "site": "https://www.sntedu.co.kr/"},
+    {"key": "saeum",   "name": "새움학원",   "color": "#65a30d", "site": "https://saeumedu.com/"},
 ]
 
 SESSION = requests.Session()
@@ -419,6 +420,52 @@ def fetch_snt(aca):
     return out
 
 
+# ── 9. 새움학원 ────────────────────────────────────────────────────────
+# 학년별 아코디언 게시판. 개별 글 링크는 없고, 날짜는 제목 안에 "`26.8.7)" 식으로 박혀 있다.
+
+SAEUM_TABS = [("https://saeumedu.com/Seminar01", "고1"),
+              ("https://saeumedu.com/Seminar02", "고2"),
+              ("https://saeumedu.com/Seminar03", "고3"),
+              ("https://saeumedu.com/Seminar04", "중등")]
+
+SAEUM_DATE_RE = re.compile(r"[`'](\d{2})\.(\d{1,2})\.(\d{1,2})")
+
+
+def _saeum_event_date(title):
+    """제목 속 "`26.8.7" 같은 표기를 모두 뽑아, 오늘 이후 중 가장 가까운 날을 고른다
+    (전부 지난 날짜면 그중 가장 최근 것)."""
+    found = []
+    for y, mo, da in SAEUM_DATE_RE.findall(title):
+        try:
+            found.append(date(2000 + int(y), int(mo), int(da)))
+        except ValueError:
+            continue
+    if not found:
+        return None
+    today = today_kst()
+    ahead = [d for d in found if d >= today]
+    return min(ahead) if ahead else max(found)
+
+
+def fetch_saeum(aca):
+    out, seen = [], set()
+    for url, label in SAEUM_TABS:
+        sp, base = soup_of(url)
+        for row in sp.select(".acd_row"):
+            title = txt(row.select_one(".acd_title"))
+            if not title:
+                continue
+            uid = re.sub(r"\W+", "", title)[:32]
+            if uid in seen:
+                continue
+            seen.add(uid)
+            d = _saeum_event_date(title)
+            out.append(item(aca, uid, title, url,
+                            event_date=iso(d), event_time=parse_time(title),
+                            place=None, hint=label))
+    return out
+
+
 FETCHERS = {
     "daechan": fetch_daechan,
     "sejung": fetch_sejung,
@@ -428,6 +475,7 @@ FETCHERS = {
     "dawon": fetch_dawon,
     "kns": fetch_kns,
     "snt": fetch_snt,
+    "saeum": fetch_saeum,
 }
 
 
