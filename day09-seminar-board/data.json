@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T08:45:04+09:00",
+ "generated_at": "2026-09-23T08:23:59+09:00",
  "source_note": "각 학원 공식 홈페이지의 설명회·공지 게시판에서 제목/일정/링크만 수집합니다. 자세한 내용은 원문 링크에서 확인하세요.",
  "academies": [
   {
@@ -7,8 +7,8 @@
    "name": "대찬학원",
    "color": "#c2410c",
    "site": "https://www.daechanedu.com/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 7,
@@ -19,8 +19,8 @@
    "name": "세정학원",
    "color": "#0e7490",
    "site": "https://sejungedu.com/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 2,
@@ -31,11 +31,11 @@
    "name": "MEXX",
    "color": "#1d4ed8",
    "site": "https://mexx.megastudy.net/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
-   "status": "ok",
-   "count": 1,
+   "status": "empty",
+   "count": 0,
    "error": null
   },
   {
@@ -43,20 +43,20 @@
    "name": "시대인재",
    "color": "#7c3aed",
    "site": "https://www.sdij.com/aca/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
    "last_success_at": "2026-09-22T08:45:04+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
-   "status": "empty",
+   "status": "fail",
    "count": 0,
-   "error": null
+   "error": "HTTPError: 403 Client Error: Forbidden for url: https://www.sdij.com/aca/briefing/default.asp?page=1&campus=101&stuGrd=A11003"
   },
   {
    "key": "yoon",
    "name": "윤도영과학",
    "color": "#15803d",
    "site": "https://yoondyedu.com/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 3,
@@ -67,8 +67,8 @@
    "name": "다원교육",
    "color": "#b91c1c",
    "site": "http://dawonedu.com/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -79,8 +79,8 @@
    "name": "KNS",
    "color": "#a16207",
    "site": "https://www.knsedu.co.kr/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 1,
@@ -91,11 +91,11 @@
    "name": "SNT",
    "color": "#be185d",
    "site": "https://www.sntedu.co.kr/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
-   "count": 3,
+   "count": 4,
    "error": null
   },
   {
@@ -103,8 +103,8 @@
    "name": "새움학원",
    "color": "#65a30d",
    "site": "https://saeumedu.com/",
-   "checked_at": "2026-09-22T08:45:04+09:00",
-   "last_success_at": "2026-09-22T08:45:04+09:00",
+   "checked_at": "2026-09-23T08:23:59+09:00",
+   "last_success_at": "2026-09-23T08:23:59+09:00",
    "first_success_at": "2026-09-20T20:50:58+09:00",
    "status": "ok",
    "count": 17,
@@ -112,6 +112,31 @@
   }
  ],
  "items": [
+  {
+   "id": "snt:고등예비고1휘문중동엑스레이분석고교선택최종점검설명회",
+   "academy_key": "snt",
+   "academy": "SNT",
+   "title": "예비고1 휘문/중동 엑스레이 분석 고교 선택 최종 점검 설명회",
+   "url": "https://www.sntedu.co.kr/presentation/newclass/",
+   "posted_at": "2026-09-23",
+   "event_date": "2026-09-29",
+   "event_time": "19:00",
+   "event_text": "2026-09-29 (화) PM 7:00",
+   "place": "SNT 14관",
+   "levels": [
+    "중등",
+    "고등"
+   ],
+   "target": "중등·고등",
+   "grades": [
+    "고교선택",
+    "예비고1",
+    "고등"
+   ],
+   "first_seen": "2026-09-23",
+   "bootstrap": false,
+   "posted_is_estimated": true
+  },
   {
    "id": "snt:중등SNT고등수학최상위를만드는코어의힘1편2차_오전",
    "academy_key": "snt",
@@ -584,29 +609,6 @@
    "posted_is_estimated": true
   },
   {
-   "id": "mexx:12890",
-   "academy_key": "mexx",
-   "academy": "MEXX",
-   "title": "고1 / 고2 의대 입시 전략 설명회",
-   "url": "http://mexx.megastudy.net/campus_common/2026/fair/view.asp?idx=12890&code=CD0405",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-09-22",
-   "event_time": "14:00",
-   "event_text": "2026. 09. 22(화) 오후 2시",
-   "place": "MEXX학원 (본관)",
-   "levels": [
-    "고등"
-   ],
-   "target": "고등",
-   "grades": [
-    "고1",
-    "고2"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
    "id": "sejung:중등-454",
    "academy_key": "sejung",
    "academy": "세정학원",
@@ -859,7 +861,7 @@
    "academy_key": "kns",
    "academy": "KNS",
    "title": "[초등관] 2026 초등 여름특강 프로그램 안내",
-   "url": "http://ele.knsedu.co.kr/ele/sub5/01.php?flag=view&aid=&bid=1&cate=0&num=30597&PHPSESSID=8f66c93b034fa85dcb1ee62a59ae8fc2",
+   "url": "http://ele.knsedu.co.kr/ele/sub5/01.php?flag=view&aid=&bid=1&cate=0&num=30597&PHPSESSID=f6844a6d20c3233645bb8c3487fdb7cd",
    "posted_at": "2026-06-11",
    "event_date": null,
    "event_time": null,
