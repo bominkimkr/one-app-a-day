@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-13T11:19:33+09:00",
+ "generated_at": "2026-10-14T09:02:48+09:00",
  "source_note": "각 학원 공식 홈페이지의 설명회·공지 게시판에서 제목/일정/링크만 수집합니다. 자세한 내용은 원문 링크에서 확인하세요.",
  "academies": [
   {
@@ -7,11 +7,11 @@
    "name": "대찬학원",
    "color": "#c2410c",
    "site": "https://www.daechanedu.com/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
-   "last_success_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
+   "last_success_at": "2026-10-14T09:02:48+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
-   "status": "ok",
-   "count": 7,
+   "status": "empty",
+   "count": 0,
    "error": null
   },
   {
@@ -19,8 +19,8 @@
    "name": "세정학원",
    "color": "#0e7490",
    "site": "https://sejungedu.com/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
-   "last_success_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
+   "last_success_at": "2026-10-14T09:02:48+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 6,
@@ -31,8 +31,8 @@
    "name": "MEXX",
    "color": "#1d4ed8",
    "site": "https://mexx.megastudy.net/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
-   "last_success_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
+   "last_success_at": "2026-10-14T09:02:48+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -43,19 +43,19 @@
    "name": "시대인재",
    "color": "#7c3aed",
    "site": "https://www.sdij.com/aca/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
    "last_success_at": "2026-10-13T11:19:33+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
-   "status": "empty",
+   "status": "fail",
    "count": 0,
-   "error": null
+   "error": "HTTPError: 403 Client Error: Forbidden for url: https://www.sdij.com/aca/briefing/default.asp?page=1&campus=101&stuGrd=A11003"
   },
   {
    "key": "yoon",
    "name": "윤도영과학",
    "color": "#15803d",
    "site": "https://yoondyedu.com/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
    "last_success_at": "2026-10-08T09:38:27+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -67,8 +67,8 @@
    "name": "다원교육",
    "color": "#b91c1c",
    "site": "http://dawonedu.com/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
-   "last_success_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
+   "last_success_at": "2026-10-14T09:02:48+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -79,20 +79,20 @@
    "name": "KNS",
    "color": "#a16207",
    "site": "https://www.knsedu.co.kr/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
    "last_success_at": "2026-10-13T11:19:33+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
-   "status": "ok",
+   "status": "fail",
    "count": 1,
-   "error": null
+   "error": "ConnectionError: HTTPConnectionPool(host='ele.knsedu.co.kr', port=80): Max retries exceeded with url: /ele/sub5/01.php (Caused by NameResolutionError(\"HTTPConnection(host='ele.knsedu.co.kr', port=80): Failed to resolve 'ele.knsedu.co.kr' ([Errno -2] Name or service not known)\"))"
   },
   {
    "key": "snt",
    "name": "SNT",
    "color": "#be185d",
    "site": "https://www.sntedu.co.kr/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
-   "last_success_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
+   "last_success_at": "2026-10-14T09:02:48+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -103,8 +103,8 @@
    "name": "새움학원",
    "color": "#65a30d",
    "site": "https://saeumedu.com/",
-   "checked_at": "2026-10-13T11:19:33+09:00",
-   "last_success_at": "2026-10-13T11:19:33+09:00",
+   "checked_at": "2026-10-14T09:02:48+09:00",
+   "last_success_at": "2026-10-14T09:02:48+09:00",
    "first_success_at": "2026-09-20T20:50:58+09:00",
    "status": "ok",
    "count": 20,
@@ -730,167 +730,6 @@
    ],
    "first_seen": "2026-09-17",
    "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:272",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 시대인재 본관6층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=272",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "시대인재 본관 (강남구 도곡로 460 동선빌딩 6층)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:270",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 시대인재 대덕관3층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=270",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "시대인재 대덕관(강남구 대치동 1023-9 대덕빌딩 3층)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:268",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 대찬본원 3,4,6층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=268",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "대찬본원 (강남구 도곡로 432)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:266",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 시대인재 트러스관 2,3,4,5,6,7층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=266",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "시대인재 트러스관 (강남구 삼성로312 TJ삼영빌딩)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:264",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 시대인재 대덕관2층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=264",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "시대인재 대덕관(강남구 대치동 1023-9 대덕빌딩 2층)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:260",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 시대인재 대덕관4층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=260",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "시대인재 대덕관(강남구 대치동 1023-9 대덕빌딩 4층)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "daechan:258",
-   "academy_key": "daechan",
-   "academy": "대찬학원",
-   "title": "예비고1 윤도영T (영상)설명회 7/7(화) 시대인재 본관4층",
-   "url": "https://www.daechanedu.com/menu/?menu_str=0405&wr_id=258",
-   "posted_at": "2026-09-09",
-   "event_date": "2026-07-07",
-   "event_time": "13:00",
-   "event_text": "7/7(화) PM 1:00",
-   "place": "시대인재 본관 (강남구 도곡로 460 동선빌딩 4층)",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-09-09",
-   "bootstrap": true,
    "posted_is_estimated": true
   },
   {
