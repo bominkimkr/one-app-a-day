@@ -1,6 +1,6 @@
 // collect.py 가 data.json 과 함께 자동 생성합니다. 직접 고치지 마세요.
 window.__SEMINAR_DATA__ = {
- "generated_at": "2026-11-04T09:58:46+09:00",
+ "generated_at": "2026-11-05T10:13:14+09:00",
  "source_note": "각 학원 공식 홈페이지의 설명회·공지 게시판에서 제목/일정/링크만 수집합니다. 자세한 내용은 원문 링크에서 확인하세요.",
  "academies": [
   {
@@ -8,8 +8,8 @@ window.__SEMINAR_DATA__ = {
    "name": "대찬학원",
    "color": "#c2410c",
    "site": "https://www.daechanedu.com/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
-   "last_success_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
+   "last_success_at": "2026-11-05T10:13:14+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -20,11 +20,11 @@ window.__SEMINAR_DATA__ = {
    "name": "세정학원",
    "color": "#0e7490",
    "site": "https://sejungedu.com/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
-   "last_success_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
+   "last_success_at": "2026-11-05T10:13:14+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
-   "count": 3,
+   "count": 1,
    "error": null
   },
   {
@@ -32,11 +32,11 @@ window.__SEMINAR_DATA__ = {
    "name": "MEXX",
    "color": "#1d4ed8",
    "site": "https://mexx.megastudy.net/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
-   "last_success_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
+   "last_success_at": "2026-11-05T10:13:14+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
-   "count": 24,
+   "count": 23,
    "error": null
   },
   {
@@ -44,8 +44,8 @@ window.__SEMINAR_DATA__ = {
    "name": "시대인재",
    "color": "#7c3aed",
    "site": "https://www.sdij.com/aca/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
-   "last_success_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
+   "last_success_at": "2026-11-05T10:13:14+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -56,7 +56,7 @@ window.__SEMINAR_DATA__ = {
    "name": "윤도영과학",
    "color": "#15803d",
    "site": "https://yoondyedu.com/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
    "last_success_at": "2026-10-08T09:38:27+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -68,8 +68,8 @@ window.__SEMINAR_DATA__ = {
    "name": "다원교육",
    "color": "#b91c1c",
    "site": "http://dawonedu.com/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
-   "last_success_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
+   "last_success_at": "2026-11-05T10:13:14+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -80,7 +80,7 @@ window.__SEMINAR_DATA__ = {
    "name": "KNS",
    "color": "#a16207",
    "site": "https://www.knsedu.co.kr/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
    "last_success_at": "2026-10-13T11:19:33+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -92,7 +92,7 @@ window.__SEMINAR_DATA__ = {
    "name": "SNT",
    "color": "#be185d",
    "site": "https://www.sntedu.co.kr/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
    "last_success_at": "2026-10-27T09:08:43+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -104,15 +104,61 @@ window.__SEMINAR_DATA__ = {
    "name": "새움학원",
    "color": "#65a30d",
    "site": "https://saeumedu.com/",
-   "checked_at": "2026-11-04T09:58:46+09:00",
-   "last_success_at": "2026-11-04T09:58:46+09:00",
+   "checked_at": "2026-11-05T10:13:14+09:00",
+   "last_success_at": "2026-11-05T10:13:14+09:00",
    "first_success_at": "2026-09-20T20:50:58+09:00",
    "status": "ok",
-   "count": 24,
+   "count": 26,
    "error": null
   }
  ],
  "items": [
+  {
+   "id": "saeum:예비고3입시설명회261114N",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "예비고3 입시설명회 (`26.11.14) N",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-11-05",
+   "event_date": "2026-11-14",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2",
+    "예비고3"
+   ],
+   "first_seen": "2026-11-05",
+   "bootstrap": false,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:예비고3입시설명회261110N",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "예비고3 입시설명회 (`26.11.10) N",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-11-05",
+   "event_date": "2026-11-10",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2",
+    "예비고3"
+   ],
+   "first_seen": "2026-11-05",
+   "bootstrap": false,
+   "posted_is_estimated": true
+  },
   {
    "id": "mexx:13244",
    "academy_key": "mexx",
@@ -583,30 +629,7 @@ window.__SEMINAR_DATA__ = {
    "event_date": "2026-11-05",
    "event_time": "11:00",
    "event_text": "2026. 11. 05(목) 오전 11시",
-   "place": "MEXX 본관",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-10-29",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "mexx:13185",
-   "academy_key": "mexx",
-   "academy": "MEXX",
-   "title": "[예비고1] 수학 콘서트 2차",
-   "url": "http://mexx.megastudy.net/campus_common/2026/fair/view.asp?idx=13185&code=CD0405",
-   "posted_at": "2026-10-29",
-   "event_date": "2026-11-04",
-   "event_time": "11:00",
-   "event_text": "2026. 11. 04(수) 오전 11시",
-   "place": "MEXX 본관",
+   "place": "MEXX 2관",
    "levels": [
     "중등"
    ],
@@ -847,56 +870,6 @@ window.__SEMINAR_DATA__ = {
     "예비고3"
    ],
    "first_seen": "2026-10-05",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "sejung:중등-473",
-   "academy_key": "sejung",
-   "academy": "세정학원",
-   "title": "2027학년도 고1 (현 중3) 고교선택 및 대입 전략 설명회 (7차)",
-   "url": "https://sejungedu.com/explain/presentationplan?co=%EC%A4%91%EB%93%B1",
-   "posted_at": "2026-10-02",
-   "event_date": "2026-10-30",
-   "event_time": null,
-   "event_text": "10/30(금) A11",
-   "place": "우전관 2층",
-   "levels": [
-    "중등",
-    "고등"
-   ],
-   "target": "중등·고등",
-   "grades": [
-    "고교선택",
-    "중3",
-    "중등"
-   ],
-   "first_seen": "2026-10-02",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "sejung:중등-472",
-   "academy_key": "sejung",
-   "academy": "세정학원",
-   "title": "2027학년도 고1 (현 중3) 고교선택 및 대입 전략 설명회 (6차)",
-   "url": "https://sejungedu.com/explain/presentationplan?co=%EC%A4%91%EB%93%B1",
-   "posted_at": "2026-10-02",
-   "event_date": "2026-10-27",
-   "event_time": null,
-   "event_text": "10/27(화) A11",
-   "place": "우전관 2층",
-   "levels": [
-    "중등",
-    "고등"
-   ],
-   "target": "중등·고등",
-   "grades": [
-    "고교선택",
-    "중3",
-    "중등"
-   ],
-   "first_seen": "2026-10-02",
    "bootstrap": false,
    "posted_is_estimated": true
   },
