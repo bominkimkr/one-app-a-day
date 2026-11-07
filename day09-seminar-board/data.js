@@ -1,6 +1,6 @@
 // collect.py 가 data.json 과 함께 자동 생성합니다. 직접 고치지 마세요.
 window.__SEMINAR_DATA__ = {
- "generated_at": "2026-11-06T10:18:30+09:00",
+ "generated_at": "2026-11-07T09:32:03+09:00",
  "source_note": "각 학원 공식 홈페이지의 설명회·공지 게시판에서 제목/일정/링크만 수집합니다. 자세한 내용은 원문 링크에서 확인하세요.",
  "academies": [
   {
@@ -8,8 +8,8 @@ window.__SEMINAR_DATA__ = {
    "name": "대찬학원",
    "color": "#c2410c",
    "site": "https://www.daechanedu.com/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
-   "last_success_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
+   "last_success_at": "2026-11-07T09:32:03+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -20,8 +20,8 @@ window.__SEMINAR_DATA__ = {
    "name": "세정학원",
    "color": "#0e7490",
    "site": "https://sejungedu.com/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
-   "last_success_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
+   "last_success_at": "2026-11-07T09:32:03+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 1,
@@ -32,11 +32,11 @@ window.__SEMINAR_DATA__ = {
    "name": "MEXX",
    "color": "#1d4ed8",
    "site": "https://mexx.megastudy.net/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
-   "last_success_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
+   "last_success_at": "2026-11-07T09:32:03+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
-   "count": 22,
+   "count": 18,
    "error": null
   },
   {
@@ -44,8 +44,8 @@ window.__SEMINAR_DATA__ = {
    "name": "시대인재",
    "color": "#7c3aed",
    "site": "https://www.sdij.com/aca/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
-   "last_success_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
+   "last_success_at": "2026-11-07T09:32:03+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -56,7 +56,7 @@ window.__SEMINAR_DATA__ = {
    "name": "윤도영과학",
    "color": "#15803d",
    "site": "https://yoondyedu.com/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
    "last_success_at": "2026-10-08T09:38:27+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -68,8 +68,8 @@ window.__SEMINAR_DATA__ = {
    "name": "다원교육",
    "color": "#b91c1c",
    "site": "http://dawonedu.com/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
-   "last_success_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
+   "last_success_at": "2026-11-07T09:32:03+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -80,7 +80,7 @@ window.__SEMINAR_DATA__ = {
    "name": "KNS",
    "color": "#a16207",
    "site": "https://www.knsedu.co.kr/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
    "last_success_at": "2026-10-13T11:19:33+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -92,7 +92,7 @@ window.__SEMINAR_DATA__ = {
    "name": "SNT",
    "color": "#be185d",
    "site": "https://www.sntedu.co.kr/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
    "last_success_at": "2026-10-27T09:08:43+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -104,15 +104,38 @@ window.__SEMINAR_DATA__ = {
    "name": "새움학원",
    "color": "#65a30d",
    "site": "https://saeumedu.com/",
-   "checked_at": "2026-11-06T10:18:30+09:00",
-   "last_success_at": "2026-11-06T10:18:30+09:00",
+   "checked_at": "2026-11-07T09:32:03+09:00",
+   "last_success_at": "2026-11-07T09:32:03+09:00",
    "first_success_at": "2026-09-20T20:50:58+09:00",
    "status": "ok",
-   "count": 26,
+   "count": 27,
    "error": null
   }
  ],
  "items": [
+  {
+   "id": "saeum:예비고1스파르타수학설명회261111N",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "예비고1 스파르타 수학 설명회 (`26.11.11) N",
+   "url": "https://saeumedu.com/Seminar04",
+   "posted_at": "2026-11-07",
+   "event_date": "2026-11-11",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "중등"
+   ],
+   "target": "중등",
+   "grades": [
+    "예비고1",
+    "중등"
+   ],
+   "first_seen": "2026-11-07",
+   "bootstrap": false,
+   "posted_is_estimated": true
+  },
   {
    "id": "saeum:예비고3입시설명회261114",
    "academy_key": "saeum",
@@ -491,98 +514,6 @@ window.__SEMINAR_DATA__ = {
    "event_date": "2026-11-07",
    "event_time": "18:30",
    "event_text": "2026. 11. 07(토) 오후 6시 30분",
-   "place": "MEXX학원 본관",
-   "levels": [
-    "고등"
-   ],
-   "target": "고등",
-   "grades": [
-    "고2",
-    "예비고3"
-   ],
-   "first_seen": "2026-11-03",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "mexx:13223",
-   "academy_key": "mexx",
-   "academy": "MEXX",
-   "title": "[예비고1] 윈터스쿨 설명회 1차",
-   "url": "http://mexx.megastudy.net/campus_common/2026/fair/view.asp?idx=13223&code=CD0405",
-   "posted_at": "2026-11-03",
-   "event_date": "2026-11-06",
-   "event_time": "15:00",
-   "event_text": "2026. 11. 06(금) 오후 3시",
-   "place": "MEXX 본관",
-   "levels": [
-    "중등"
-   ],
-   "target": "중등",
-   "grades": [
-    "예비고1",
-    "중3"
-   ],
-   "first_seen": "2026-11-03",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "mexx:13225",
-   "academy_key": "mexx",
-   "academy": "MEXX",
-   "title": "[예비고2] 윈터스쿨 설명회 1차",
-   "url": "http://mexx.megastudy.net/campus_common/2026/fair/view.asp?idx=13225&code=CD0405",
-   "posted_at": "2026-11-03",
-   "event_date": "2026-11-06",
-   "event_time": "15:00",
-   "event_text": "2026. 11. 06(금) 오후 3시",
-   "place": "MEXX 본관",
-   "levels": [
-    "고등"
-   ],
-   "target": "고등",
-   "grades": [
-    "고1",
-    "예비고2"
-   ],
-   "first_seen": "2026-11-03",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "mexx:13227",
-   "academy_key": "mexx",
-   "academy": "MEXX",
-   "title": "[예비고3] 손주은 회장 입시 설명회",
-   "url": "http://mexx.megastudy.net/campus_common/2026/fair/view.asp?idx=13227&code=CD0405",
-   "posted_at": "2026-11-03",
-   "event_date": "2026-11-06",
-   "event_time": "14:00",
-   "event_text": "2026. 11. 06(금) 오후 2시",
-   "place": "MEXX학원 본관",
-   "levels": [
-    "고등"
-   ],
-   "target": "고등",
-   "grades": [
-    "고2",
-    "예비고3"
-   ],
-   "first_seen": "2026-11-03",
-   "bootstrap": false,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "mexx:13228",
-   "academy_key": "mexx",
-   "academy": "MEXX",
-   "title": "[예비고3] 피오르에듀(이과1차) 입시설명회",
-   "url": "http://mexx.megastudy.net/campus_common/2026/fair/view.asp?idx=13228&code=CD0405",
-   "posted_at": "2026-11-03",
-   "event_date": "2026-11-06",
-   "event_time": "18:30",
-   "event_text": "2026. 11. 06(금) 오후 6시 30분",
    "place": "MEXX학원 본관",
    "levels": [
     "고등"
