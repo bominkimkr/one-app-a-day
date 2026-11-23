@@ -1,6 +1,6 @@
 // collect.py 가 data.json 과 함께 자동 생성합니다. 직접 고치지 마세요.
 window.__SEMINAR_DATA__ = {
- "generated_at": "2026-11-22T09:49:27+09:00",
+ "generated_at": "2026-11-23T10:17:08+09:00",
  "source_note": "각 학원 공식 홈페이지의 설명회·공지 게시판에서 제목/일정/링크만 수집합니다. 자세한 내용은 원문 링크에서 확인하세요.",
  "academies": [
   {
@@ -8,8 +8,8 @@ window.__SEMINAR_DATA__ = {
    "name": "대찬학원",
    "color": "#c2410c",
    "site": "https://www.daechanedu.com/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
-   "last_success_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
+   "last_success_at": "2026-11-23T10:17:08+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -20,8 +20,8 @@ window.__SEMINAR_DATA__ = {
    "name": "세정학원",
    "color": "#0e7490",
    "site": "https://sejungedu.com/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
-   "last_success_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
+   "last_success_at": "2026-11-23T10:17:08+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -32,8 +32,8 @@ window.__SEMINAR_DATA__ = {
    "name": "MEXX",
    "color": "#1d4ed8",
    "site": "https://mexx.megastudy.net/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
-   "last_success_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
+   "last_success_at": "2026-11-23T10:17:08+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "ok",
    "count": 4,
@@ -44,8 +44,8 @@ window.__SEMINAR_DATA__ = {
    "name": "시대인재",
    "color": "#7c3aed",
    "site": "https://www.sdij.com/aca/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
-   "last_success_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
+   "last_success_at": "2026-11-23T10:17:08+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -56,7 +56,7 @@ window.__SEMINAR_DATA__ = {
    "name": "윤도영과학",
    "color": "#15803d",
    "site": "https://yoondyedu.com/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
    "last_success_at": "2026-10-08T09:38:27+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -68,8 +68,8 @@ window.__SEMINAR_DATA__ = {
    "name": "다원교육",
    "color": "#b91c1c",
    "site": "http://dawonedu.com/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
-   "last_success_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
+   "last_success_at": "2026-11-23T10:17:08+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "empty",
    "count": 0,
@@ -80,7 +80,7 @@ window.__SEMINAR_DATA__ = {
    "name": "KNS",
    "color": "#a16207",
    "site": "https://www.knsedu.co.kr/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
    "last_success_at": "2026-10-13T11:19:33+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -92,7 +92,7 @@ window.__SEMINAR_DATA__ = {
    "name": "SNT",
    "color": "#be185d",
    "site": "https://www.sntedu.co.kr/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
    "last_success_at": "2026-10-27T09:08:43+09:00",
    "first_success_at": "2026-09-09T14:11:59+09:00",
    "status": "fail",
@@ -104,15 +104,61 @@ window.__SEMINAR_DATA__ = {
    "name": "새움학원",
    "color": "#65a30d",
    "site": "https://saeumedu.com/",
-   "checked_at": "2026-11-22T09:49:27+09:00",
-   "last_success_at": "2026-11-22T09:49:27+09:00",
+   "checked_at": "2026-11-23T10:17:08+09:00",
+   "last_success_at": "2026-11-23T10:17:08+09:00",
    "first_success_at": "2026-09-20T20:50:58+09:00",
    "status": "ok",
-   "count": 28,
+   "count": 29,
    "error": null
   }
  ],
  "items": [
+  {
+   "id": "saeum:예비고3수리논술인문논술전략설명회2612126125N",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "예비고3 수리논술/인문논술 전략 설명회 (`26.12.1) (`26.12.5) N",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-11-23",
+   "event_date": "2026-12-01",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2",
+    "예비고3"
+   ],
+   "first_seen": "2026-11-23",
+   "bootstrap": false,
+   "posted_is_estimated": true
+  },
+  {
+   "id": "saeum:2028예비고3입시설명회아우켈라시대입시팀장261128N",
+   "academy_key": "saeum",
+   "academy": "새움학원",
+   "title": "2028 예비고3 입시설명회 아우켈라 시대입시팀장 (`26.11.28) N",
+   "url": "https://saeumedu.com/Seminar02",
+   "posted_at": "2026-11-23",
+   "event_date": "2026-11-28",
+   "event_time": null,
+   "event_text": null,
+   "place": null,
+   "levels": [
+    "고등"
+   ],
+   "target": "고등",
+   "grades": [
+    "고2",
+    "예비고3"
+   ],
+   "first_seen": "2026-11-23",
+   "bootstrap": false,
+   "posted_is_estimated": true
+  },
   {
    "id": "saeum:2028예비고3입시설명회이정형시대센터장261122",
    "academy_key": "saeum",
@@ -721,28 +767,6 @@ window.__SEMINAR_DATA__ = {
    "target": "고등",
    "grades": [
     "고1"
-   ],
-   "first_seen": "2026-09-20",
-   "bootstrap": true,
-   "posted_is_estimated": true
-  },
-  {
-   "id": "saeum:26년고2내신설명회및간담회일정",
-   "academy_key": "saeum",
-   "academy": "새움학원",
-   "title": "26년 고2 내신 설명회 및 간담회 일정",
-   "url": "https://saeumedu.com/Seminar02",
-   "posted_at": "2026-09-20",
-   "event_date": null,
-   "event_time": null,
-   "event_text": null,
-   "place": null,
-   "levels": [
-    "고등"
-   ],
-   "target": "고등",
-   "grades": [
-    "고2"
    ],
    "first_seen": "2026-09-20",
    "bootstrap": true,
